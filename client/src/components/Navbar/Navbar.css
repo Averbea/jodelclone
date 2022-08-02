@@ -1,0 +1,10 @@
+
+.navbar{
+    background-color: var(--primary);
+    text-align: center;
+    padding: 1rem;
+
+    position: sticky;
+    top: 0;
+
+}
