@@ -6,7 +6,12 @@ export default function Navbar() {
   return (
       <div className='navbar'>
        
-          <h1>Jodelclone</h1>
+          <h2>Jodelclone</h2>
+          <div>
+            <p className='headerMenuItem'>Neueste</p>
+            <p className='headerMenuItem'>Meist kommentierte</p>
+            <p className='headerMenuItem'>Lauteste</p>
+          </div>
 
         
       </div>

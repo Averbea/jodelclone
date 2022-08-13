@@ -5,10 +5,10 @@ import './Footer.css'
 export default function Footer() {
   return (
     <div className='footer'>
-        <p>Home</p>
-        <p>Channels</p>
-        <p>Inbox</p>
-        <p>Me</p>
+        <p className='footerMenuItem'>Home</p>
+        <p className='footerMenuItem'>Channels</p>
+        <p className='footerMenuItem'>Inbox</p>
+        <p className='footerMenuItem'>Me</p>
     </div>
   )
 }

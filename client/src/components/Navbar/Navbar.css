@@ -1,6 +1,7 @@
 
 .navbar{
-    background-color: var(--primary);
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
     text-align: center;
     padding: 1rem;
 
@@ -8,3 +9,21 @@
     top: 0;
 
 }
+
+.headerMenuItem {
+	font-size:.75rem;
+    font-weight: 500;
+	padding: 5px .75rem;
+	margin-top: .75rem;
+    margin-inline: .5rem;
+
+	border: 1px solid var(--primary);
+    border-radius: .75rem;
+	/* font-weight:bold; */
+	cursor:pointer;
+
+	display: inline-block;
+}
+
+
+

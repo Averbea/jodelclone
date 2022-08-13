@@ -4,13 +4,24 @@ import './Post.css'
 export default function Post() {
   return (
    <div className='post'>
-        <div>
-          <p>@main</p>
-          <p>5min</p>
+        <div className='header'>
+          <p className='channel'>@main</p>
+          <p>nah</p>
+          <p>•</p>
+          <p>5 min</p>
         </div>
-        <div>Lorem Ipsum dolor sit amet</div>
-        <div>5 Kommentare</div>
-        <div>999 Vote</div>
+
+        <div className='middle-block'>
+          <div className='content'> Lorem Ipsum dolor sit ametLorem Ipsum dolor sit ametLorem Ipsum dolor sit amet</div>
+          <div className='voting'>
+            <p>/ \</p>
+            <p>999</p>
+            <p>\ /</p>
+          </div>
+        </div>
+
+        <div className='comments'>5 Kommentare</div>
+        
    </div>
   )
 }

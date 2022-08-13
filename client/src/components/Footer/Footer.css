@@ -3,21 +3,30 @@
     bottom: 0;
 
     background-color: white;
-    padding: 1rem;
-    border-top: 1px solid #e4e4e45d;
+    padding: .75rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
 
-    display: grid;
+    /* display: grid;
     grid-auto-columns: minmax(0, 1fr);
     grid-auto-flow: column;
     column-gap: 1rem;
+     */
+    text-align: center;
     
 }
 
-.footer p{
-    background-color: var(--primary);
-    padding: .5rem;
-    text-align: center;
-    font-size: .8rem;
-    border-radius: .2rem;
-}
+/* for now this is the same as in Navbar component */
+.footerMenuItem {
+	font-size:.75rem;
+    font-weight: 500;
+	padding: 5px .75rem;
+	margin-top: .75rem;
+    margin-inline: .5rem;
 
+	border: 1px solid var(--primary);
+    border-radius: .75rem;
+
+	cursor:pointer;
+
+	display: inline-block;
+}

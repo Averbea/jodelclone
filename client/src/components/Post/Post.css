@@ -1,7 +1,43 @@
 .post{
-    background-color: white;
+    background-color: rgb(65, 158, 65);
     padding: 1rem;
     margin: .75rem 0;
     
-    border-radius: .25rem;
+    border-radius: .3rem;
+    color: white;
+}
+
+.header{
+    display: flex;
+    font-size: .8rem; 
+}
+
+.header *{
+    padding: .2rem .2rem;
+    /* margin-: .2rem     */
+}
+
+.channel{
+    padding-inline:  .5rem;
+    background-color: rgba(0, 0, 0, 0.26);
+    border-radius: 1rem;
+    margin-right: .5rem;
+}
+.voting{
+    justify-self: end;
+}
+
+.content{
+    margin: .7rem 0;
+    line-height: 1.5rem;
+    /* word-spacing: 50px; */
+    /* letter-spacing: 0.4px; */
+}
+.middle-block{
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.comments{
+    font-size: .8rem;
 }
