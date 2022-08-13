@@ -9,7 +9,9 @@
     top: 0;
 
 }
-
+.dumbass{
+    
+}
 .headerMenuItem {
 	font-size:.75rem;
     font-weight: 500;
@@ -17,7 +19,8 @@
 	margin-top: .75rem;
     margin-inline: .5rem;
 
-	border: 1px solid var(--primary);
+	border: 1px solid rgba(0, 0, 0, .2);
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, .2);
     border-radius: .75rem;
 	/* font-weight:bold; */
 	cursor:pointer;
@@ -25,5 +28,8 @@
 	display: inline-block;
 }
 
-
+.activeSortingItem{
+    border-color: var(--primary);
+    box-shadow: 0 0 3px 0 var(--primary);
+}
 
