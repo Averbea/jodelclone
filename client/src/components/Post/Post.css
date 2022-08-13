@@ -30,6 +30,8 @@
 .content{
     margin: .7rem 0;
     line-height: 1.5rem;
+    padding-left: .75rem;
+    padding-right: 1rem;
     /* word-spacing: 50px; */
     /* letter-spacing: 0.4px; */
 }
