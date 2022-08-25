@@ -25,9 +25,15 @@
 	cursor:pointer;
 
 	display: inline-block;
+
+    text-decoration: none;
 }
 
-.activePage{
+.footerMenuItem:visited{
+    color: inherit;
+}
+
+.active {
     border-color: var(--primary);
     box-shadow: 0 0 3px 0 var(--primary);
 }

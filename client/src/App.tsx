@@ -1,34 +1,26 @@
 import React from 'react';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed/Feed';
 import Footer from './components/Footer/Footer';
-import SortingHeader from './components/SortingHeader/SortingHeader';
+import NotFound from './components/NotFound/NotFound';
 
-export enum View { Home, Channels, Inbox, Me}
+export enum View { Home, Channels, Inbox, Me, Post}
 function App() {
 
- 
-
-  const [currentView, setCurrentView] = React.useState(View.Home)
-
-  let page;
-
-  switch(currentView){
-    case View.Home: 
-      page = 
-        <>
-          <SortingHeader/ >
-          <Feed />
-        </>
-      break;
-    default: 
-      page = "not implemented yet" 
-
-  }
+  
   return (
     <div className='App'>
-      {page}
-      <Footer activePage={currentView} changeView={(newView: View) => setCurrentView(newView)}/>
+      
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Feed />} ></Route>
+          <Route path="*" element={<NotFound />} ></Route>
+         
+        </Routes>
+        <Footer /> 
+      </BrowserRouter>
     </div>
   );
 }

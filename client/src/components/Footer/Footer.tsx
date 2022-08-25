@@ -1,30 +1,33 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { View } from '../../App'
 
 import './Footer.css'
 
 
-type FooterProps = {
-  changeView: Function, 
-  activePage: View
-}
 
-export default function Footer( { changeView, activePage }: FooterProps ) {
+export default function Footer( ) {
 
   function navClasses (currentType: View): string {
     let classes = 'footerMenuItem'
-    if (activePage === currentType){
-      classes += ' activePage'
-    }
+   
     return classes
   }
 
   return (
     <div className='footer'>
-        <p className={navClasses(View.Home)} onClick={() => changeView(View.Home)}>Home</p>
-        <p className={navClasses(View.Channels)} onClick={() => changeView(View.Channels)}>Channels</p>
-        <p className={navClasses(View.Inbox)} onClick={() => changeView(View.Inbox)}>Inbox</p>
-        <p className={navClasses(View.Me)} onClick={() => changeView(View.Me)}>Me</p>
+      <NavLink className="footerMenuItem" to="/">
+        Home
+      </NavLink>
+      <NavLink className="footerMenuItem" to="Channels">
+        Channels
+      </NavLink>
+      <NavLink className="footerMenuItem" to="Inbox">
+        Inbox
+      </NavLink>
+      <NavLink className="footerMenuItem" to="Me">
+        Me
+      </NavLink>
     </div>
   )
 }
