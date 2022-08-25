@@ -24,7 +24,8 @@
     margin-right: .5rem;
 }
 .voting{
-    justify-self: end;
+    text-align: center;
+    width: 3rem;
 }
 
 .content{

@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import './Post.css'
 
@@ -14,9 +16,9 @@ export default function Post() {
         <div className='middle-block'>
           <div className='content'> Lorem Ipsum dolor sit ametLorem Ipsum dolor sit ametLorem Ipsum dolor sit amet</div>
           <div className='voting'>
-            <p>/ \</p>
+            <FontAwesomeIcon size='2x' icon={faChevronUp} />
             <p>999</p>
-            <p>\ /</p>
+            <FontAwesomeIcon size='2x' icon={faChevronDown} />
           </div>
         </div>
 
