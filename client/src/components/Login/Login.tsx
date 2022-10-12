@@ -9,13 +9,17 @@ export default function Login() {
   const [password, setPassword] = React.useState("")
   
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     //this maybe should be located somewhere else
-    api.signIn(username, password)
-  
-
+    try {
+      api.signIn(username, password)
+      // .then((response) => console.log(response) )
+      .then((response:any) => localStorage.setItem('User', JSON.stringify(response.data)));
+    } catch (error) {
+      console.log("could not sign in")
+    }
 
   }
   

@@ -14,7 +14,7 @@ export default function Feed() {
     fetchPosts().then((response) => {
       setPosts(response.data.posts)
       setLoading(false)
-    })
+    }).catch((error) => console.log(error))
   },[])
 
   const postContent = posts.map((post: any) =>   
