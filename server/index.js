@@ -6,6 +6,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 
 import userRoutes from './routes/user.js'
+import postsRoutes from './routes/posts.js'
 
 
 const app = express()
@@ -15,6 +16,8 @@ app.use(cors());
 
 
 app.use("/users", userRoutes)
+app.use("/posts", postsRoutes)
+
 
 const PORT = 5000;
 

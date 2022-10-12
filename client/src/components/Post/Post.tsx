@@ -3,21 +3,24 @@ import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import './Post.css'
 
-export default function Post() {
+
+export default function Post(props: { postData: any; }) {
+  const postData = props.postData
+
   return (
    <div className='post'>
         <div className='header'>
-          <p className='channel'>@main</p>
+          <p className='channel'>@{postData.channel}</p>
           <p>nah</p>
           <p>•</p>
           <p>5 min</p>
         </div>
 
         <div className='middle-block'>
-          <div className='content'> Lorem Ipsum dolor sit ametLorem Ipsum dolor sit ametLorem Ipsum dolor sit amet</div>
+          <div className='content'> {postData.message}</div>
           <div className='voting'>
             <FontAwesomeIcon size='2x' icon={faChevronUp} />
-            <p>999</p>
+            <p>{postData.upvotes.length - postData.downvotes.length}</p>
             <FontAwesomeIcon size='2x' icon={faChevronDown} />
           </div>
         </div>

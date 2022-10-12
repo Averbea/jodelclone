@@ -13,4 +13,4 @@ const API: Axios = axios.create({ baseURL: 'http://localhost:5000' });
 
 export const signIn = async (email: String, password: String) => API.post('/users/signin',{email, password} )
 
-
+export const fetchPosts = () => API.get(`/posts`);
