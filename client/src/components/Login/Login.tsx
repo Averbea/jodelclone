@@ -1,5 +1,6 @@
 import React from 'react'
-import * as api from '../../api';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Auth';
 
 import './Login.css'
 
@@ -8,15 +9,17 @@ export default function Login() {
   const [username, setUsername] = React.useState("")
   const [password, setPassword] = React.useState("")
   
+  const {onLogin} = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     //this maybe should be located somewhere else
     try {
-      api.signIn(username, password)
-      // .then((response) => console.log(response) )
-      .then((response:any) => localStorage.setItem('User', JSON.stringify(response.data)));
+      await onLogin(username, password)
+      // TODO remember location the user came from
+      navigate("/")
     } catch (error) {
       console.log("could not sign in")
     }
