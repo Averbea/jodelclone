@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed/Feed';
 import Footer from './components/Footer/Footer';
@@ -36,9 +36,10 @@ type propTypes = {
 }
 const ProtectedRoute = ({ children } : propTypes) => {
   const { token } = useAuth();
+  const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{from: location}} replace />;
   }
 
   return children;

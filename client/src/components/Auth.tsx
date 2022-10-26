@@ -15,8 +15,8 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
   // TODO: sync with localStorage correctly
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem('User') || "").token || null);
-    
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem('User') || "{}").token || null);
+
   const handleLogin = async (username: String, password:String) => {
       const temp = await api.signIn(username, password);
       const token = temp.data.token 

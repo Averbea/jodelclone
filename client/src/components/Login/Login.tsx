@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Path, To, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth';
 
 import './Login.css'
@@ -11,6 +11,7 @@ export default function Login() {
   
   const {onLogin} = useAuth()
   const navigate = useNavigate()
+  const location = useLocation() as any
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -18,8 +19,7 @@ export default function Login() {
     //this maybe should be located somewhere else
     try {
       await onLogin(username, password)
-      // TODO remember location the user came from
-      navigate("/")
+      navigate(location.state?.from?.pathname || "/")
     } catch (error) {
       console.log("could not sign in")
     }
