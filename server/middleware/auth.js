@@ -14,8 +14,11 @@ const auth = async (req, res, next) => {
         req.userId = decodedData?.id;
         next();
     } catch (error) {
-        console.log(error); 
-        res.status(401).json({message: "JWT expired"})
+        if(error instanceof jwt.TokenExpiredError){
+            res.status(401).json({message: "JWT expired"})
+            return
+        }
+        res.sendStatus(500)
     }
     
 };
