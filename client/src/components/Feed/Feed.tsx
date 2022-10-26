@@ -14,8 +14,11 @@ export default function Feed() {
 
   useEffect(() => {
     fetchPosts().then((response) => {
-      setPosts(response.data.posts)
-      setLoading(false)
+      console.log(response)
+      if(response){
+        setPosts(response.data.posts)
+        setLoading(false)
+      }
     }).catch((error) => console.log(error))
   },[])
 

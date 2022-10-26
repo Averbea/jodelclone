@@ -1,19 +1,11 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { View } from '../../App'
+import { NavLink } from 'react-router-dom'
 
 import './Footer.css'
 
 
 
 export default function Footer( ) {
-
-  function navClasses (currentType: View): string {
-    let classes = 'footerMenuItem'
-   
-    return classes
-  }
-
   return (
     <div className='footer'>
       <NavLink className="footerMenuItem" to="/">
