@@ -1,5 +1,5 @@
 import axios, { Axios } from 'axios';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const API: Axios = axios.create({ baseURL: 'http://localhost:5000' });
 //TODO maybe this should get the token from AuthenticationContext instead of localStorage
 API.interceptors.request.use((req: any) => {
@@ -18,8 +18,9 @@ API.interceptors.response.use((res: any) => {
 (error: any) => {
   let response = error.response
   if(response.status === 401 && response.data.message === 'JWT expired'){
-    //TODO redirect to login page
-    return Promise.reject("API returned error: JWT expired")
+    //TODO check if this is the best method to redirect in this case
+    window.location.replace("/login")
+    return Promise.reject("JWT expired")
   }
   return error
 })
