@@ -15,7 +15,8 @@ export default function CreatePost() {
     e.preventDefault()
     
     try {
-      const postId = await Api.createPost(text)
+      const response = await Api.createPost(text)
+      const postId = response.data
       navigate(`/${postId}`)
     } catch (error) {
              

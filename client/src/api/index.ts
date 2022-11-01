@@ -14,7 +14,7 @@ API.interceptors.request.use((req: any) => {
 
 API.interceptors.response.use((res: any) => {
   //status code 2..
-  return res.data
+  return res
 }, 
 (error: any) => {
   let response = error.response
