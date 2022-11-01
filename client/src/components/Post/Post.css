@@ -38,7 +38,7 @@
 }
 .middle-block{
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: auto 3rem;
 }
 
 .comments{

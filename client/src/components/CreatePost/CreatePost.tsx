@@ -25,7 +25,7 @@ export default function CreatePost() {
 
   return (
     <div className='createPost'>
-      <form onSubmit={create}>
+      <form className='createForm' onSubmit={create}>
         <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder='Gib deinen Jodel ein....' />
         <button type="submit" >Send</button>
       </form>

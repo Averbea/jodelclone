@@ -1,20 +1,19 @@
-.createPost{
+.createForm{
     background-color: rgb(65, 158, 65);
     padding: 1rem;
     margin: .75rem 0;
-    
     border-radius: .3rem;
     color: white;
 }
 
-.createPost::before{
+.createPost{
     background-color: #e4e4e45d;
     padding: 10px 20px; 
 }
 
 @media only screen and (min-width: 768px)
   {
-    .createPost {
+    .createForm {
         margin-inline: auto;
         max-width: 50%;
     }
