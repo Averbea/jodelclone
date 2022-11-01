@@ -1,0 +1,34 @@
+.createPost{
+    background-color: rgb(65, 158, 65);
+    padding: 1rem;
+    margin: .75rem 0;
+    
+    border-radius: .3rem;
+    color: white;
+}
+
+.createPost::before{
+    background-color: #e4e4e45d;
+    padding: 10px 20px; 
+}
+
+@media only screen and (min-width: 768px)
+  {
+    .createPost {
+        margin-inline: auto;
+        max-width: 50%;
+    }
+}
+
+textarea::placeholder{
+    color: lightgrey;
+}
+textarea {
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    resize: none;
+    border: none;
+
+    height: 5rem
+}

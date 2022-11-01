@@ -1,6 +1,5 @@
 .feed{
     background-color: #e4e4e45d;
-   
     padding: 10px 20px; 
 }
 
@@ -11,5 +10,24 @@
         margin-inline: auto;
         max-width: 50%;
     }
+}
+
+.createButton{
+    background-color: #4848481b;
+    color: white;
+    
+    text-align: center;
+    justify-content: center;
+    position: fixed;
+    
+    bottom: 7rem;
+    left: 50%;
+    width: 3rem;
+    height: 3rem;
+    transform: translate( -3rem, 1.5rem);
+
+    border: 2px solid #ffffffa2 ;
+    border-radius: 50% 50%;
+
 }
     

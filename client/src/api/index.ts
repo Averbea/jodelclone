@@ -1,5 +1,6 @@
 import axios, { Axios } from 'axios';
 import { Navigate, useNavigate } from "react-router-dom";
+
 const API: Axios = axios.create({ baseURL: 'http://localhost:5000' });
 //TODO maybe this should get the token from AuthenticationContext instead of localStorage
 API.interceptors.request.use((req: any) => {
@@ -13,7 +14,7 @@ API.interceptors.request.use((req: any) => {
 
 API.interceptors.response.use((res: any) => {
   //status code 2..
-  return res
+  return res.data
 }, 
 (error: any) => {
   let response = error.response
@@ -25,6 +26,12 @@ API.interceptors.response.use((res: any) => {
   return error
 })
 
+
+
+
 export const signIn = async (email: String, password: String) => API.post('/users/signin',{email, password} )
 
 export const fetchPosts = () => API.get(`/posts`);
+
+ 
+export const createPost = (message: String) => API.post('/posts/create', {message})

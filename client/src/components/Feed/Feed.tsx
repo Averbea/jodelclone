@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { fetchPosts } from '../../api'
-import { useAuth } from '../Auth'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import Post from '../Post/Post'
 import SortingHeader from '../SortingHeader/SortingHeader'
@@ -11,6 +14,7 @@ export default function Feed() {
 
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchPosts().then((response) => {
@@ -33,6 +37,9 @@ export default function Feed() {
       <div className='feed'>
         {postContent}
         {loading && "loading"}
+        <button className="createButton" onClick={() => navigate("/createPost")}> 
+          <FontAwesomeIcon icon={faPlus}/> 
+        </button>
       </div>
     </>
   )
