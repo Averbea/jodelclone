@@ -1,7 +1,7 @@
 .createForm{
     background-color: rgb(65, 158, 65);
     padding: 1rem;
-    margin: .75rem 0;
+    margin: .75rem 20px;
     border-radius: .3rem;
     color: white;
 }
@@ -10,6 +10,7 @@
     background-color: #e4e4e45d;
     height: 100vh;
     margin: 0;
+
 }
 
 @media only screen and (min-width: 768px)

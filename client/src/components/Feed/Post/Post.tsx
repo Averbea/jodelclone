@@ -2,13 +2,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import './Post.css'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Post(props: { postData: any; }) {
   const postData = props.postData
-
+  const navigate = useNavigate()
+  
   return (
-   <div className='post'>
+   <div className='post' onClick={() => navigate(`/posts/${postData._id}`)}>
         <div className='header'>
           <p className='channel'>@{postData.channel}</p>
           <p>nah</p>

@@ -5,7 +5,7 @@ import { fetchPosts } from '../../api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import Post from '../Post/Post'
+import Post from './Post/Post'
 import SortingHeader from '../SortingHeader/SortingHeader'
 
 import './Feed.css'
@@ -26,8 +26,8 @@ export default function Feed() {
     }).catch((error) => console.log(error))
   },[])
 
-  const postContent = posts.map((post: any) =>   
-    <Post key={post._id} postData={post}/>
+  const postContent = posts.map((post: any) => 
+    <Post key={post._id} postData={post}/> 
   )
   
   return (
