@@ -13,7 +13,7 @@ export const signin = async (req, res) => {
 
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
-        if(!isPasswordCorrect) return res.status(400).json({message:"Invalid credentials"});
+        if(!isPasswordCorrect) return res.status(401).json({message:"Invalid credentials"});
 
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 

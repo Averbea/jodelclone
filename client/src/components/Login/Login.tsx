@@ -21,6 +21,7 @@ export default function Login() {
       await onLogin(username, password)
       navigate(location.state?.from?.pathname || "/")
     } catch (error) {
+      alert("could not sign in. Wrong Credentials?")
       console.log("could not sign in")
     }
 
