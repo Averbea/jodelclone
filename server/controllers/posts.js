@@ -1,6 +1,17 @@
 import mongoose from "mongoose"
 import PostModel from "../models/postSchema.js"
 
+export const getPost = async (req, res) => {
+    try {
+        const post = await PostModel.findById(new mongoose.Types.ObjectId(req.params))
+        const postToSend = reducePostToNecessaryData(post, req.userId)
+        res.status(200).json(postToSend)
+    } catch (error) {
+
+        res.sendStatus(500)
+    }
+}
+
 const reducePostToNecessaryData = (post, userId) => {
     const isUsersPost = post.author === userId ? true: false;
     const userVote = 0

@@ -32,6 +32,6 @@ API.interceptors.response.use((res: any) => {
 export const signIn = async (email: String, password: String) => API.post('/users/signin',{email, password} )
 
 export const fetchPosts = () => API.get(`/posts`);
-
+export const fetchPost = (postId: string) => API.get(`/posts/${postId}`)
  
 export const createPost = (message: String) => API.post('/posts/create', {message})
