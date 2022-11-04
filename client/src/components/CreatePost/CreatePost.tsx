@@ -19,7 +19,7 @@ export default function CreatePost() {
     try {
       const response = await Api.createPost(text)
       const postId = response.data
-      navigate(`/${postId}`)
+      navigate(`/posts/${postId}`)
     } catch (error) {
              
     }    
