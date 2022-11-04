@@ -30,7 +30,7 @@ export const getPosts = async (req, res) => {
     try {
         const postsFromDb = await PostModel.find().sort({_id: -1})
         const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId))
-        res.status(200).json({posts});
+        res.status(200).json(posts);
 
     } catch (error) {
         res.status(404).json({message: error.message})

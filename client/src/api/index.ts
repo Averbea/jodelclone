@@ -28,10 +28,20 @@ API.interceptors.response.use((res: any) => {
 
 
 
+export type UserAuth = {
+  token: String
+}
+export const signIn = async (email: String, password: String) => API.post<UserAuth>('/users/signin',{email, password} )
 
-export const signIn = async (email: String, password: String) => API.post('/users/signin',{email, password} )
-
-export const fetchPosts = () => API.get(`/posts`);
-export const fetchPost = (postId: string) => API.get(`/posts/${postId}`)
+export type PostType = {
+  _id: String, 
+  isUsersPost: boolean, 
+  message: String, 
+  votes: number, 
+  commentAmount: number, 
+  channel: string
+}
+export const fetchPosts = () => API.get<PostType[]>(`/posts`);
+export const fetchPost = (postId: string) => API.get<PostType>(`/posts/${postId}`)
  
-export const createPost = (message: String) => API.post('/posts/create', {message})
+export const createPost = (message: String) => API.post<String>('/posts/create', {message})
