@@ -5,8 +5,16 @@ import './Post.css'
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Post(props: { postData: any; }) {
-  const postData = props.postData
+export default function Post({ postData }:{
+  postData:  {
+    _id: String,
+    isUsersPost: boolean, 
+    message: string, 
+    votes: number, 
+    commentAmount: number, 
+    channel: String
+  }
+}) {
   const navigate = useNavigate()
   
   return (
@@ -22,12 +30,12 @@ export default function Post(props: { postData: any; }) {
           <div className='content'> {postData.message}</div>
           <div className='voting'>
             <FontAwesomeIcon size='2x' icon={faChevronUp} />
-            <p>{postData.upvotes.length - postData.downvotes.length}</p>
+            <p>{postData.votes}</p>
             <FontAwesomeIcon size='2x' icon={faChevronDown} />
           </div>
         </div>
 
-        <div className='comments'>5 Kommentare</div>
+        <div className='comments'>{postData.commentAmount} Kommentare</div>
         
    </div>
   )
