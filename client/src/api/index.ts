@@ -1,5 +1,4 @@
 import axios, { Axios } from 'axios';
-import { Navigate, useNavigate } from "react-router-dom";
 
 const API: Axios = axios.create({ baseURL: 'http://localhost:5000' });
 //TODO maybe this should get the token from AuthenticationContext instead of localStorage
@@ -28,12 +27,12 @@ API.interceptors.response.use((res: any) => {
 
 
 
-export type UserAuth = {
+export interface IUserToken {
   token: String
 }
-export const signIn = async (email: String, password: String) => API.post<UserAuth>('/users/signin',{email, password} )
+export const signIn = async (email: String, password: String) => API.post<IUserToken>('/users/signin',{email, password} )
 
-export type PostType = {
+export interface IPost {
   _id: String, 
   isUsersPost: boolean, 
   message: String, 
@@ -41,7 +40,14 @@ export type PostType = {
   commentAmount: number, 
   channel: string
 }
-export const fetchPosts = () => API.get<PostType[]>(`/posts`);
-export const fetchPost = (postId: string) => API.get<PostType>(`/posts/${postId}`)
+export const fetchPosts = () => API.get<IPost[]>(`/posts`);
+export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
  
 export const createPost = (message: String) => API.post<String>('/posts/create', {message})
+
+export interface IComment { 
+  _id: String,
+  isUsersPost: boolean,
+  message: String,
+  votes: number
+}

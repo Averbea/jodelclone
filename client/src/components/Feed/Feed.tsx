@@ -5,15 +5,15 @@ import { fetchPosts } from '../../api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import Post from './Post/Post'
+import Post from '../Post/Post'
 import SortingHeader from '../SortingHeader/SortingHeader'
 
 import './Feed.css'
 import  Container  from '../Container/Container'
-import {PostType} from '../../api'
+import {IPost} from '../../api'
 export default function Feed() {
 
-  const [posts, setPosts] = useState<PostType[]>([])
+  const [posts, setPosts] = useState<IPost[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
  
@@ -27,7 +27,7 @@ export default function Feed() {
     }).catch((error) => console.log(error))
   },[])
   const postContent = posts.map((post: any) => 
-    <Post key={post._id} postData={post}/> 
+    <Post key={post._id} postData={post} onClick={() => navigate(`/posts/${post._id}`)}/> 
   )
   
   return (

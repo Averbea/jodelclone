@@ -7,6 +7,7 @@ import NotFound from './components/NotFound/NotFound';
 import Login from './components/Login/Login';
 import { AuthProvider, useAuth } from './components/Auth';
 import CreatePost from './components/CreatePost/CreatePost';
+import PostDetails from './components/PostDetails/PostDetails';
 
 function App() {
 
@@ -15,9 +16,14 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={
+          <Route path="/" element={
               <ProtectedRoute>
                 <Feed />
+              </ProtectedRoute>
+            } />
+            <Route path="/posts/:id" element={
+              <ProtectedRoute>
+                <PostDetails />
               </ProtectedRoute>
             } />
             <Route path="/createPost" element={
