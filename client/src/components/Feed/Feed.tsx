@@ -9,6 +9,7 @@ import Post from './Post/Post'
 import SortingHeader from '../SortingHeader/SortingHeader'
 
 import './Feed.css'
+import  Container  from '../Container/Container'
 
 export default function Feed() {
 
@@ -33,14 +34,16 @@ export default function Feed() {
   return (
     <>
       <SortingHeader />
-    
-      <div className='feed'>
+      <Container>
         {postContent}
         {loading && "loading"}
         <button className="createButton" onClick={() => navigate("/createPost")}> 
-          <FontAwesomeIcon icon={faPlus}/> 
+            <FontAwesomeIcon icon={faPlus}/> 
         </button>
-      </div>
+        
+      </Container>
+    
+      
     </>
   )
 }

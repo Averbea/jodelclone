@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as Api from '../../api/'
 import BackHeader from '../BackHeader/BackHeader';
+import Container from '../Container/Container';
 
 import './CreatePost.css'
 
@@ -25,13 +26,16 @@ export default function CreatePost() {
   }
 
   return (
-    <div className='createPost'>
-      <BackHeader/>
-      <form className='createForm' onSubmit={create}>
-        <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder='Gib deinen Jodel ein....' />
-        <button type="submit" >Send</button>
-      </form>
-    </div>
+    <>
+      <BackHeader />
+      <Container>
+        <form className='createForm' onSubmit={create}>
+          <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder='Gib deinen Jodel ein....' />
+          <button type="submit" >Send</button>
+        </form>
+      </Container>
+    </>
 
   )
 }
+

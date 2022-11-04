@@ -6,13 +6,6 @@
     color: white;
 }
 
-.createPost{
-    background-color: #e4e4e45d;
-    height: 100vh;
-    margin: 0;
-
-}
-
 @media only screen and (min-width: 768px)
   {
     .createForm {
