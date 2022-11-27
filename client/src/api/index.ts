@@ -39,7 +39,8 @@ export interface IPost {
   _id: String, 
   isUsersPost: boolean, 
   message: String, 
-  votes: number, 
+  votes: number,
+  userVote: "none" | "up" | "down", 
   commentAmount: number, 
   channel: string
 }
@@ -51,6 +52,9 @@ export const createPost = (message: String) => API.post<String>('/posts/create',
 export interface IComment { 
   _id: String,
   isUsersPost: boolean,
+  userVote: "none" | "up" | "down", 
   message: String,
   votes: number
 }
+
+export const votePost = (postId: String, vote: "up" | "down") => API.post<IPost>(`/posts/${postId}/vote`, {vote})
