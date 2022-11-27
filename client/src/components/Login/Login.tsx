@@ -1,6 +1,7 @@
 import React from 'react'
 import { Path, To, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth';
+import Container from '../Container/Container';
 
 import './Login.css'
 
@@ -28,20 +29,16 @@ export default function Login() {
   }
   
   return (
-    <div>
+    <Container>
       <h1>Welcome to the Jodelclone!</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input type="text" autoComplete='username' value={username} onChange={(event) => setUsername(event.target.value)} />
-        </label>
-        <label>
-          Password:
-          <input type="password" autoComplete='password' value={password} onChange={(event) => setPassword(event?.target.value)} />
-        </label>
+      <form onSubmit={handleSubmit} className="loginForm">
+        <label htmlFor="username">Username:</label>
+        <input id="username" type="text" autoComplete='username' value={username} onChange={(event) => setUsername(event.target.value)} />
+        <label htmlFor="password">Password</label>
+        <input id="password" type="password" autoComplete='password' value={password} onChange={(event) => setPassword(event?.target.value)} />
         <input type="submit" value="Login" />
       </form>
 
-    </div>
+    </Container>
   )
 }
