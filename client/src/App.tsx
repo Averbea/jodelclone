@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed/Feed';
 import Footer from './components/Footer/Footer';
@@ -16,21 +16,12 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-          <Route path="/" element={
-              <ProtectedRoute>
-                <Feed />
-              </ProtectedRoute>
-            } />
-            <Route path="/posts/:id" element={
-              <ProtectedRoute>
-                <PostDetails />
-              </ProtectedRoute>
-            } />
-            <Route path="/createPost" element={
-              <ProtectedRoute>
-                <CreatePost/>
-              </ProtectedRoute>
-            } />
+            <Route element={<PrivateRoutes/>}>
+              <Route path="/" element={<Feed />} />
+              <Route path="/posts/:id" element={<PostDetails />} />
+              <Route path="/createPost" element={<CreatePost/>}/>
+            </Route>
+            
             <Route path="*" element={<NotFound />} />
             <Route path="login" element={<Login />}/>        
           </Routes>
@@ -43,16 +34,12 @@ function App() {
 
 export default App;
 
-type propTypes = {
-  children: any
-}
-const ProtectedRoute = ({ children } : propTypes) => {
+
+const PrivateRoutes = () => {
   const { token } = useAuth();
   const location = useLocation();
 
-  if (!token) {
-    return <Navigate to="/login" state={{from: location}} replace />;
-  }
-
-  return children;
-};
+    return (
+      token ? <Outlet/> : <Navigate to="/login" state={{from: location}} replace />
+    ) 
+}
