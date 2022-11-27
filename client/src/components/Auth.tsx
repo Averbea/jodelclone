@@ -4,7 +4,8 @@ import * as api from '../api'
 
 
 const AuthContext = createContext({
-    token: null, 
+    token: null,
+    username: "",
     onLogin: async (username: String, password: String) => {}, 
     onLogout: async () =>  {}
 })
@@ -15,22 +16,27 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
   // TODO: sync with localStorage correctly
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem('User') || "{}").token || null);
-
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('User') || "{}") || null);
+  
   const handleLogin = async (username: String, password:String) => {
       const temp = await api.signIn(username, password);
-      const token = temp.data.token 
-      localStorage.setItem('User', JSON.stringify({token}))
-      setToken(token);
+      const user =  {
+        token: temp.data.token,
+        username: temp.data.username
+      }
+      localStorage.setItem('User', JSON.stringify(user))
+      setUser(user);
   };
 
   const handleLogout = () => {
-    setToken(null);
+    setUser(null);
     localStorage.removeItem('User')
+    window.location.reload()
   };
 
   const value: any = {
-    token: token,
+    token: user.token,
+    username: user.username,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

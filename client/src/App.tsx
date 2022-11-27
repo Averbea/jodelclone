@@ -8,6 +8,7 @@ import Login from './components/Login/Login';
 import { AuthProvider, useAuth } from './components/Auth';
 import CreatePost from './components/CreatePost/CreatePost';
 import PostDetails from './components/PostDetails/PostDetails';
+import Me from './components/Me/Me';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
               <Route path="/" element={<Feed />} />
               <Route path="/posts/:id" element={<PostDetails />} />
               <Route path="/createPost" element={<CreatePost/>}/>
+              <Route path="/Me" element={<Me/>}/>
             </Route>
             
             <Route path="*" element={<NotFound />} />

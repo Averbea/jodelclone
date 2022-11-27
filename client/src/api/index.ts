@@ -28,7 +28,8 @@ API.interceptors.response.use((res: any) => {
 
 
 export interface IUserToken {
-  token: String
+  token: String, 
+  username: String
 }
 export const signIn = async (email: String, password: String) => API.post<IUserToken>('/users/signin',{email, password} )
 
