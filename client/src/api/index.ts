@@ -33,6 +33,8 @@ export interface IUserToken {
 }
 export const signIn = async (email: String, password: String) => API.post<IUserToken>('/users/signin',{email, password} )
 
+export const signOut = async () => API.post('/users/signout')
+
 export interface IPost {
   _id: String, 
   isUsersPost: boolean, 

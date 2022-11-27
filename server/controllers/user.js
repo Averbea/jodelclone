@@ -3,6 +3,15 @@ import jwt from 'jsonwebtoken';
 
 import UserModel from '../models/userSchema.js';
 
+export const signout = async (req, res) => {
+    //TODO make logged out users unable to login with the old token 
+    const {userId} = req
+    console.log(req)
+
+    console.log(userId, " signed out")
+    res.sendStatus(200)
+}
+
 export const signin = async (req, res) => {
     try {
         const { email, password } = req.body;

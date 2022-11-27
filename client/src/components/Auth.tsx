@@ -28,7 +28,8 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
       setUser(user);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await api.signOut();
     setUser(null);
     localStorage.removeItem('User')
     window.location.reload()
