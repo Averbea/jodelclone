@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BackHeader from '../BackHeader/BackHeader'
 import Container from '../Container/Container'
 
-import { fetchPost, IComment, IPost } from '../../api'
+import { fetchPost, IComment, IPost, votePost } from '../../api'
 import { useParams } from 'react-router-dom'
 import Post from '../Post/Post'
 import Comment from '../Post/Comment'
@@ -32,11 +32,16 @@ export default function PostDetails() {
     return <Comment commentData={c} />
   })
 
+  const vote = async ( postId: String, v: "up" | "down") => {
+    const response =  await votePost(postId, v)
+    const newPost:IPost = response.data
+    setPost(newPost)
+  }
   return (
     <>
       <BackHeader />
       <Container>
-        {post && <Post postData={post} />}
+        {post && <Post postData={post} onVotePost={vote} />}
         <>
           {commentComponents}
         </>

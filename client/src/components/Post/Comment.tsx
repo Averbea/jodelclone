@@ -1,5 +1,5 @@
 import React from 'react'
-import { IComment, IPost } from '../../api'
+import { IComment, IPost, votePost } from '../../api'
 import Post from './Post'
 
 interface Props {
@@ -15,7 +15,13 @@ export default function Comment({ commentData }: Props) {
         channel: ""
     }
 
+    const vote = async ( postId: String, v: "up" | "down") => {
+        // const response =  await votePost(postId, v)
+        // const newPost:IPost = response.data
+        //TODO Voting for comments
+    
+      }
     return (
-        <Post postData={tmp} usedAsComment={true} />
+        <Post onVotePost={vote} postData={tmp} usedAsComment={true} />
     )
 }

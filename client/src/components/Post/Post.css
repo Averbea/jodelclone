@@ -28,6 +28,31 @@
     width: 3rem;
 }
 
+.vote-button{
+    background-color: transparent;
+    border: none;
+    color: white;
+    transition: .2s;
+}
+
+.vote-button:not([disabled]):hover{
+    transform: scale(1.3)
+}
+
+.vote-button:not([disabled]):active{
+    transform: scale(.9);
+    opacity: 50%;
+}
+
+.voted{
+    transform: scale(1.1);
+}
+
+.not-voted{
+    transform: scale(.9);
+    opacity: 40%;
+}
+
 .content{
     margin: .7rem 0;
     line-height: 1.5rem;

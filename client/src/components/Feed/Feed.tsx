@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchPosts } from '../../api'
+import { fetchPosts, votePost } from '../../api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -17,6 +17,7 @@ export default function Feed() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
  
+  console.log(posts)
   useEffect(() => {
     fetchPosts().then((response) => {
       console.log(response)
@@ -26,8 +27,23 @@ export default function Feed() {
       }
     }).catch((error) => console.log(error))
   },[])
+  
+  
+  const vote = async ( postId: String, v: "up" | "down") => {
+    const response =  await votePost(postId, v)
+    const newPost:IPost = response.data
+    setPosts((old) => old.map(prev => {
+      if(prev._id === newPost._id){
+        return newPost
+      }else{
+        return prev
+      }
+    }))
+
+  }
+  
   const postContent = posts.map((post: any) => 
-    <Post key={post._id} postData={post} onClick={() => navigate(`/posts/${post._id}`)}/> 
+    <Post key={post._id} postData={post} onVotePost={vote} onClick={() => navigate(`/posts/${post._id}`)}/> 
   )
   
   return (
