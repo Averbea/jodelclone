@@ -5,6 +5,30 @@ import './Post.css'
 
 import { IPost} from '../../api';
 
+
+
+function getTimeToDisplay(prevDate: string):string{
+
+  
+  const diff = Date.now() - new Date(prevDate).getTime()
+
+  const diffInMins = Math.floor(diff / 60000)
+  const diffInHours = Math.floor(diffInMins / 60)
+  const diffInDays = Math.floor(diffInHours / 24)
+  const diffInWeeks = Math.floor(diffInDays / 7)
+  
+  if (diffInWeeks > 0){
+    return `vor ${diffInWeeks} ${diffInWeeks > 1? "Wochen": "Woche"}`
+  }
+  if( diffInDays > 0){
+    return `vor ${diffInDays} ${diffInDays > 1?"Tagen":"Tag"}`
+  }
+  if (diffInHours > 0){
+    return `vor ${diffInWeeks} ${diffInWeeks > 1?"Stunden":"Stunde"}`
+  }
+  return `vor ${diffInMins} ${diffInMins > 1 ?"Minuten":"Minute"}`
+}
+
 export default function Post({ postData, usedAsComment = false, onClick= () => {}, onVotePost}: {
   postData: IPost,
   usedAsComment?: boolean, 
@@ -37,7 +61,7 @@ export default function Post({ postData, usedAsComment = false, onClick= () => {
         {!usedAsComment && <p className='channel'>@{postData.channel}</p>}
         <p>nah</p>
         <p>•</p>
-        <p>5 min</p>
+        <p>{getTimeToDisplay(postData.createdAt)}</p>
       </div>
 
       <div className='middle-block'>

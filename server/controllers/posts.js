@@ -29,7 +29,8 @@ const reducePostToNecessaryData = (post, userId) => {
         votes: post.upvotes.length - post.downvotes.length,
         userVote: userVote,
         commentAmount: 0,
-        channel: post.channel
+        channel: post.channel, 
+        createdAt: post.createdAt
 
     }
 }

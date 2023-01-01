@@ -12,7 +12,8 @@ export default function Comment({ commentData }: Props) {
     const tmp: IPost = {
         ...commentData,
         commentAmount: 0,
-        channel: ""
+        channel: "", 
+        createdAt: "December 24, 2022 23:59:59"
     }
 
     const vote = async ( postId: String, v: "up" | "down") => {

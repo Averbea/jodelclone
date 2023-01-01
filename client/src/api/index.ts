@@ -42,7 +42,8 @@ export interface IPost {
   votes: number,
   userVote: "none" | "up" | "down", 
   commentAmount: number, 
-  channel: string
+  channel: string, 
+  createdAt: string
 }
 export const fetchPosts = () => API.get<IPost[]>(`/posts`);
 export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
