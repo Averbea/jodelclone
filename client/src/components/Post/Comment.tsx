@@ -16,13 +16,13 @@ export default function Comment({ commentData }: Props) {
         createdAt: "December 24, 2022 23:59:59"
     }
 
-    const vote = async ( postId: String, v: "up" | "down") => {
-        // const response =  await votePost(postId, v)
-        // const newPost:IPost = response.data
-        //TODO Voting for comments
+    // const vote = async ( postId: String, v: "up" | "down") => {
+    //     // const response =  await votePost(postId, v)
+    //     // const newPost:IPost = response.data
+    //     //TODO Voting for comments
     
-      }
-    return (
-        <Post onVotePost={vote} postData={tmp} usedAsComment={true} />
-    )
+    //   }
+    // return (
+    //     <Post onVotePost={vote} postData={tmp} usedAsComment={true} />
+    // )
 }

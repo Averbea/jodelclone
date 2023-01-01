@@ -59,3 +59,4 @@ export interface IComment {
 }
 
 export const votePost = (postId: String, vote: "up" | "down") => API.post<IPost>(`/posts/${postId}/vote`, {vote})
+export const deletePost = (postId: String) => API.delete(`/posts/${postId}`)

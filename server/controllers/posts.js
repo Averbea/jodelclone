@@ -12,6 +12,15 @@ export const getPost = async (req, res) => {
     }
 }
 
+export const deletePost = async (req, res) => {
+    try {
+        const response = await PostModel.deleteOne(new mongoose.Types.ObjectId(req.params))
+        res.sendStatus(200)
+    } catch(error){
+        res.sendStatus(500)
+    }
+}
+
 const reducePostToNecessaryData = (post, userId) => {
     const isUsersPost = post.author === userId ? true: false;
     let userVote = "none"

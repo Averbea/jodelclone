@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchPosts, votePost } from '../../api'
+import { fetchPosts, votePost, deletePost } from '../../api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -11,6 +11,7 @@ import SortingHeader from '../SortingHeader/SortingHeader'
 import './Feed.css'
 import  Container  from '../Container/Container'
 import {IPost} from '../../api'
+
 export default function Feed() {
 
   const [posts, setPosts] = useState<IPost[]>([])
@@ -41,9 +42,17 @@ export default function Feed() {
     }))
 
   }
+
+  const deleteThisPost = async (postId: String) => {
+    const response = await deletePost(postId)
+    if( response instanceof Error){
+      return 
+    }
+    setPosts((prev) => prev.filter(post => post._id !== postId))
+  }
   
   const postContent = posts.map((post: any) => 
-    <Post key={post._id} postData={post} onVotePost={vote} onClick={() => navigate(`/posts/${post._id}`)}/> 
+    <Post key={post._id} postData={post} onVotePost={vote} onDeletePost={deleteThisPost} onClick={() => navigate(`/posts/${post._id}`)}/> 
   )
   
   return (

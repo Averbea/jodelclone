@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import './Post.css'
 
 import { IPost} from '../../api';
-import { create } from 'domain';
+
 
 
 
@@ -41,16 +41,16 @@ function getColor(createdAt: string){
     "#D03E2E"
   ]
   const hashVal = createdAt.split('').map(char => char.charCodeAt(0)).reduce((accumulator, value) => accumulator + value)
-  console.log(hashVal % 5)
 
   return colors[hashVal % colors.length]
 }
 
-export default function Post({ postData, usedAsComment = false, onClick= () => {}, onVotePost}: {
+export default function Post({ postData, usedAsComment = false, onClick= () => {}, onVotePost, onDeletePost}: {
   postData: IPost,
   usedAsComment?: boolean, 
   onClick?: Function, 
-  onVotePost: (postId: String, vote: "up" | "down") => void
+  onVotePost: (postId: String, vote: "up" | "down") => void, 
+  onDeletePost: (postId: String) => void
 }) {
 
   const vote = (event: React.MouseEvent, v: "up" | "down") => {
@@ -58,7 +58,10 @@ export default function Post({ postData, usedAsComment = false, onClick= () => {
     if(onVotePost) onVotePost(postData._id, v)
   }
 
- 
+  const deletePost = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      onDeletePost(postData._id)
+  }
   let classesUp = "vote-button"
   let classesDown = "vote-button"
 
@@ -78,6 +81,10 @@ export default function Post({ postData, usedAsComment = false, onClick= () => {
         <p>nah</p>
         <p>•</p>
         <p>{getTimeToDisplay(postData.createdAt)}</p>
+        {postData.isUsersPost && 
+        <div className="delete" onClick={(event) => deletePost(event)}>
+          <FontAwesomeIcon size="1x" icon={faTrash} />
+        </div>}
       </div>
 
       <div className='middle-block'>

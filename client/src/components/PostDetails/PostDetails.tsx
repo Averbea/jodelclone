@@ -29,7 +29,7 @@ export default function PostDetails() {
   })
 
   const commentComponents = comments.map((c) => {
-    return <Comment commentData={c} />
+    // return <Comment commentData={c} />
   })
 
   const vote = async ( postId: String, v: "up" | "down") => {
@@ -37,11 +37,16 @@ export default function PostDetails() {
     const newPost:IPost = response.data
     setPost(newPost)
   }
+
+  const deletePost = async (postId: String) => {
+    await deletePost(postId)
+    // TODO: navigate back
+  }
   return (
     <>
       <BackHeader />
       <Container>
-        {post && <Post postData={post} onVotePost={vote} />}
+        {post && <Post postData={post} onDeletePost={deletePost} onVotePost={vote} />}
         <>
           {commentComponents}
         </>
