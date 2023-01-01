@@ -19,15 +19,15 @@ function getTimeToDisplay(prevDate: string):string{
   const diffInWeeks = Math.floor(diffInDays / 7)
   
   if (diffInWeeks > 0){
-    return `vor ${diffInWeeks} ${diffInWeeks > 1? "Wochen": "Woche"}`
+    return `vor ${diffInWeeks} ${diffInWeeks === 1? "Woche": "Wochen"}`
   }
   if( diffInDays > 0){
-    return `vor ${diffInDays} ${diffInDays > 1?"Tagen":"Tag"}`
+    return `vor ${diffInDays} ${diffInDays === 1?"Tag":"Tagen"}`
   }
   if (diffInHours > 0){
-    return `vor ${diffInWeeks} ${diffInWeeks > 1?"Stunden":"Stunde"}`
+    return `vor ${diffInHours} ${diffInHours === 1?"Stunde":"Stunden"}`
   }
-  return `vor ${diffInMins} ${diffInMins > 1 ?"Minuten":"Minute"}`
+  return `vor ${diffInMins} ${diffInMins === 1 ?"Minute":"Minuten"}`
 }
 
 
