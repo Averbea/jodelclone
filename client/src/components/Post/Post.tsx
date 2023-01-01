@@ -4,6 +4,7 @@ import React from 'react'
 import './Post.css'
 
 import { IPost} from '../../api';
+import { create } from 'domain';
 
 
 
@@ -29,13 +30,28 @@ function getTimeToDisplay(prevDate: string):string{
   return `vor ${diffInMins} ${diffInMins > 1 ?"Minuten":"Minute"}`
 }
 
+
+function getColor(createdAt: string){
+  // TODO choose more fitting colors 
+  const colors = [
+    "#9D79BC",
+    "#FF751F",
+    "#52A362",
+    "#2095AC",
+    "#D03E2E"
+  ]
+  const hashVal = createdAt.split('').map(char => char.charCodeAt(0)).reduce((accumulator, value) => accumulator + value)
+  console.log(hashVal % 5)
+
+  return colors[hashVal % colors.length]
+}
+
 export default function Post({ postData, usedAsComment = false, onClick= () => {}, onVotePost}: {
   postData: IPost,
   usedAsComment?: boolean, 
   onClick?: Function, 
   onVotePost: (postId: String, vote: "up" | "down") => void
 }) {
-
 
   const vote = (event: React.MouseEvent, v: "up" | "down") => {
     event.stopPropagation();
@@ -56,7 +72,7 @@ export default function Post({ postData, usedAsComment = false, onClick= () => {
   }
 
   return (
-    <div className='post' onClick={() => onClick()}>
+    <div className='post' style={{backgroundColor: getColor(postData.createdAt)}} onClick={() => onClick()}>
       <div className='header'>
         {!usedAsComment && <p className='channel'>@{postData.channel}</p>}
         <p>nah</p>
