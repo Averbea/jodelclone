@@ -17,17 +17,18 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<PrivateRoutes/>}>
-              <Route path="/" element={<Feed />} />
-              <Route path="/posts/:id" element={<PostDetails />} />
-              <Route path="/createPost" element={<CreatePost/>}/>
-              <Route path="/Me" element={<Me/>}/>
+            <Route element={<><Outlet /><Footer/></>}> 
+              <Route element={<PrivateRoutes/>}>
+                <Route path="/" element={<Feed />} />
+                <Route path="/posts/:id" element={<PostDetails />} />
+                <Route path="/createPost" element={<CreatePost/>}/>
+                <Route path="/Me" element={<Me/>}/>
+                <Route path="*" element={<NotFound />} />
+              </Route>
             </Route>
-            
-            <Route path="*" element={<NotFound />} />
             <Route path="login" element={<Login />}/>        
           </Routes>
-          <Footer /> 
+
         </BrowserRouter>
       </AuthProvider>     
     </div>
