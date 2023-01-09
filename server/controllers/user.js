@@ -47,7 +47,7 @@ export const signup = async (req, res) => {
         const result = await UserModel.create({ username, password: hashedPassword });
         const token = jwt.sign({ username: result.username, id: result._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
         console.log(result)
-        res.status(200).json({token})
+        res.status(200).json({token, username: username})
         
     } catch (error) {
         console.log(error);

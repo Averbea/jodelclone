@@ -38,8 +38,8 @@ export default function Login() {
     }
 
     try {
-      let res = await onSignUp(username, password, repeatPassword)
-      console.log(res)
+      await onSignUp(username, password, repeatPassword)
+      navigate("/")
     } catch (error: any) {
       setErrorText(error.message)
     }

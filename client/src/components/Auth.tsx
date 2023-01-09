@@ -42,7 +42,11 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
       let tmp: any = res
       throw new Error(tmp.response.data.message)
     }
-
+    const user =  {
+      token: res.data.token,
+      username: res.data.username
+    }
+    localStorage.setItem('User', JSON.stringify(user))
     setUser(res.data)
   }
 
