@@ -1,6 +1,66 @@
-.loginForm{
-    display: grid; 
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    width: min-content;
+.login{
+    align-items: center;
+    margin-top: 4rem;
+  
 }
+
+ 
+  input[type="text"],
+  input[type="password"] {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    padding: .3rem;
+  }
+  
+  input[type="submit"], input[type="button"] {
+    margin-top: 10px;
+    cursor: pointer;
+   
+  
+    border: 1px solid var(--primary);
+    background: transparent;
+    border-radius: 20px;
+    
+  }
+  
+  input[type="submit"]:hover, input[type="button"]:hover {
+    background: var(--primary);
+    color: white
+  }
+
+  input[type="submit"]{
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+  }
+
+  input[type="button"]{
+    font-size: .75rem;
+    padding: 5px 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .5rem;
+  }
+   
+  .title {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+
+  .error{
+    border: 1px solid lightgray;
+    padding: .5rem; 
+    border-radius: 5px;
+    color: red;
+  }

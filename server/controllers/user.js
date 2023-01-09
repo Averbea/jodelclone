@@ -38,7 +38,7 @@ export const signup = async (req, res) => {
 
         const { email, password, confirmPassword} = req.body;
         const existingUser = await (UserModel.findOne({email}));
-        if(existingUser) return res.status(400).message({ message: "User already eists"});
+        if(existingUser) return res.status(400).json({ message: "User already eists"});
 
         if(password !== confirmPassword) return res.status(400).message({ message: "Passwords dont match"});
 
