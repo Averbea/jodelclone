@@ -1,4 +1,5 @@
-import {createContext, useContext, useState} from 'react'
+import {createContext, useContext, useEffect, useState} from 'react'
+
 
 import * as api from '../api'
 
@@ -15,10 +16,34 @@ export const useAuth = () => {
     return useContext(AuthContext)
 }
 
+
+const parseJwt = (token: string) => {
+  try {
+    let tmp = token.split('.')[1]
+    return JSON.parse(Buffer.from(tmp, 'base64').toString());
+  } catch (e) {
+    return null;
+  }
+};
+
+function isExpired (token: string) {
+  const decodedJwt = parseJwt(token);
+  if (decodedJwt?.exp * 1000 < Date.now()) {
+    return true
+  }
+  return false
+}
+
 export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
   // TODO: sync with localStorage correctly
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('User') || "{}") || null);
   
+  useEffect(() => {
+    if(user?.token && isExpired(user.token)){
+      handleLogout()
+    }
+  }, [user])
+
   const handleLogin = async (username: String, password:String) => {
       const temp = await api.signIn(username, password);
       const user =  {
