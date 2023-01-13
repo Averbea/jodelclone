@@ -64,7 +64,7 @@ export default function Login() {
     setRepeatPassword("")
   }
 
-  if (isLoggedIn()) return <Navigate to="/" />
+  if (!isLoggedIn()) return <Navigate to="/" />
 
   const titleText = isSignUp ? "Sign up for Jodelclone" : "Welcome to Jodelclone"
   const submitText = isSignUp ? "Sign Up" : "Log In"

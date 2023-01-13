@@ -17,7 +17,7 @@ API.interceptors.response.use((res: any) => {
 }, 
 (error: any) => {
   let response = error.response
-  if(response.status === 401 && response.data.message === 'JWT expired'){
+  if(response.status === 401){
     //TODO check if this is the best method to redirect in this case
     window.location.replace("/login")
     return Promise.reject("JWT expired")
