@@ -1,15 +1,13 @@
-import {createContext, useContext, useEffect, useState} from 'react'
-
+import {createContext, useContext, useState} from 'react'
+import {Buffer} from 'buffer'
 
 import * as api from '../api'
-
-
 const AuthContext = createContext({
-    token: null,
-    username: "",
-    onLogin: async (username: String, password: String) => {}, 
-    onLogout: async () =>  {},
-    onSignUp: async (username: String, password: String, repeatPassword: String) => {}
+  isLoggedIn: () => false,
+  username: "",
+  onLogin: async (username: String, password: String) => {}, 
+  onLogout: async () =>  {},
+  onSignUp: async (username: String, password: String, repeatPassword: String) => {}
 })
 
 export const useAuth = () => {
@@ -38,13 +36,7 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
   // TODO: sync with localStorage correctly
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('User') || "{}") || null);
   
-  useEffect(() => {
-    if(user?.token && isExpired(user.token)){
-      handleLogout()
-    }
-  }, [user])
-
-  const handleLogin = async (username: String, password:String) => {
+  async function handleLogin(username: String, password:String){
       const temp = await api.signIn(username, password);
       const user =  {
         token: temp.data.token,
@@ -54,14 +46,13 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
       setUser(user);
   };
 
-  const handleLogout = async () => {
-    await api.signOut();
-    setUser(null);
+  async function handleLogout (){
     localStorage.removeItem('User')
-    window.location.reload()
+    setUser(null);
+    await api.signOut();
   };
 
-  const handleSignUp = async (username: String, password:String, repeatPassword: String) => {
+  async function handleSignUp(username: String, password:String, repeatPassword: String){
     const res = await api.signUp(username, password, repeatPassword )
     if(res.status !== 200){
       let tmp: any = res
@@ -75,9 +66,20 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
     setUser(res.data)
   }
 
+  function isLoggedIn(){
+    // this checks if the user is expired on every usage of the token and syncs to localstorage
+    if(!user) return false
+    if(user?.token && isExpired(user.token)){
+      handleLogout()
+      return false
+    }
+    return true
+  }
+
   const value: any = {
-    token: user.token,
-    username: user.username,
+    isLoggedIn: isLoggedIn,
+    token: user?.token,
+    username: user?.username,
     onLogin: handleLogin,
     onLogout: handleLogout,
     onSignUp: handleSignUp

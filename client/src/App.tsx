@@ -39,10 +39,10 @@ export default App;
 
 
 const PrivateRoutes = () => {
-  const { token } = useAuth();
+  const { isLoggedIn } = useAuth();
   const location = useLocation();
 
     return (
-      token ? <Outlet/> : <Navigate to="/login" state={{from: location}} replace />
+      isLoggedIn() ? <Outlet/> : <Navigate to="/login" state={{from: location}} replace />
     ) 
 }

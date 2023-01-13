@@ -16,7 +16,7 @@ export default function Login() {
 
   const [errorText, setErrorText] = React.useState("")
 
-  const { onLogin, onSignUp, token } = useAuth()
+  const { onLogin, onSignUp, isLoggedIn } = useAuth()
   const navigate = useNavigate()
   const location = useLocation() as any
 
@@ -64,7 +64,7 @@ export default function Login() {
     setRepeatPassword("")
   }
 
-  if (token) return <Navigate to="/" />
+  if (isLoggedIn()) return <Navigate to="/" />
 
   const titleText = isSignUp ? "Sign up for Jodelclone" : "Welcome to Jodelclone"
   const submitText = isSignUp ? "Sign Up" : "Log In"
