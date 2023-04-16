@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import PostModel from "../models/postSchema.js"
+import { PostModel, CommentModel } from "../models/postSchema.js"
 
 export const getPost = async (req, res) => {
     try {
@@ -31,13 +31,15 @@ const reducePostToNecessaryData = (post, userId) => {
         userVote = "down"
     }
 
+    console.log(post)
+
     return {
         _id: post._id,
         isUsersPost,
         message: post.message,
         votes: post.upvotes.length - post.downvotes.length,
         userVote: userVote,
-        commentAmount: 0,
+        commentAmount: post.comments.length,
         channel: post.channel,
         createdAt: post.createdAt
 
@@ -113,4 +115,74 @@ export const votePost = async (req, res) => {
         res.sendStatus(500)
     }
 
+}
+
+
+export const commentPost = async (req, res) => {
+    try {
+        const postId = req.params.id
+        const { message } = req.body
+        console.log("commented on postId", postId)
+        const newComment = new CommentModel({ message: message, author: req.userId, createdAt: new Date().toISOString() });
+        try {
+            const newPost = await PostModel.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { comments: newComment } },
+                {
+                    new: true
+                }
+            )
+        }
+        catch (e) {
+        }
+        if (!newPost) res.sendStatus(400)
+
+        res.sendStatus(200)
+
+    } catch (error) {
+        res.sendStatus(500)
+    }
+
+}
+
+export const getCommentsForPost = async (req, res) => {
+    try {
+        const postId = req.params.id
+        //TODO: add pagination
+        const commentsFromDb = await PostModel.findById(
+            req.params.id,
+            "comments"
+        )
+
+        let toRet = {
+            _id: commentsFromDb._id,
+            comments: commentsFromDb.comments.map(c => reduceCommentToNecessaryData(c))
+        }
+
+        res.status(200).json(toRet)
+
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+}
+
+const reduceCommentToNecessaryData = (comment, userId) => {
+    const isUsersPost = comment.author === userId ? true : false;
+    let userVote = "none"
+    if (comment.upvotes.includes(userId)) {
+        userVote = "up"
+    }
+    else if (comment.downvotes.includes(userId)) {
+        userVote = "down"
+    }
+
+    return {
+        _id: comment._id,
+        isUsersPost,
+        message: comment.message,
+        votes: comment.upvotes.length - comment.downvotes.length,
+        userVote: userVote,
+        createdAt: comment.createdAt
+    }
 }

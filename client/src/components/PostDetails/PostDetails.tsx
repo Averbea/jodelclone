@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import BackHeader from '../BackHeader/BackHeader'
 import Container from '../Container/Container'
 
-import { fetchPost, IComment, IPost, votePost } from '../../api'
-import { useParams } from 'react-router-dom'
+import { deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } from '../../api'
+import { useNavigate, useParams } from 'react-router-dom'
 import Post from '../Post/Post'
 import Comment from '../Post/Comment'
 
@@ -14,6 +14,8 @@ export default function PostDetails() {
 
   let { id } = useParams()
 
+  let navigate = useNavigate()
+
   useEffect(() => {
     if (!id) return
     fetchPost(id).then(
@@ -21,32 +23,32 @@ export default function PostDetails() {
         setPost(response.data)
       }
     )
+    getCommentsForPost(id).then(
+      (res) => setComments(res.data.comments)
+    )
 
   }, [id])
 
-  useEffect(() => {
-    // TODO fetch comments here ore together with post
-  })
 
   const commentComponents = comments.map((c) => {
-    // return <Comment commentData={c} />
+    return <Comment commentData={c} />
   })
 
-  const vote = async ( postId: String, v: "up" | "down") => {
-    const response =  await votePost(postId, v)
-    const newPost:IPost = response.data
+  const vote = async (postId: String, v: "up" | "down") => {
+    const response = await votePost(postId, v)
+    const newPost: IPost = response.data
     setPost(newPost)
   }
 
-  const deletePost = async (postId: String) => {
+  const onDeletePost = async (postId: String) => {
     await deletePost(postId)
-    // TODO: navigate back
+    navigate(-1)
   }
   return (
     <>
       <BackHeader />
       <Container>
-        {post && <Post postData={post} onDeletePost={deletePost} onVotePost={vote} />}
+        {post && <Post postData={post} onDeletePost={onDeletePost} onVotePost={vote} />}
         <>
           {commentComponents}
         </>
