@@ -135,11 +135,12 @@ export const commentPost = async (req, res) => {
         }
         catch (e) {
         }
-        if (!newPost) res.sendStatus(400)
+        if (!newComment) res.sendStatus(400)
 
         res.sendStatus(200)
 
     } catch (error) {
+        console.log(error)
         res.sendStatus(500)
     }
 
