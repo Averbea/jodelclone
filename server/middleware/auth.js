@@ -4,8 +4,8 @@ const auth = async (req, res, next) => {
 
     try {
 
-        if(!req.headers.authorization){
-            res.status(401).json({message: "no authorization header sent"})
+        if (!req.headers.authorization) {
+            res.status(401).json({ message: "no authorization header sent" })
             return
         }
         const token = req.headers.authorization.split(" ")[1];
@@ -14,13 +14,13 @@ const auth = async (req, res, next) => {
         req.userId = decodedData?.id;
         next();
     } catch (error) {
-        if(error instanceof jwt.TokenExpiredError){
-            res.status(401).json({message: "JWT expired"})
+        if (error instanceof jwt.TokenExpiredError) {
+            res.status(401).json({ message: "JWT expired" })
             return
         }
         res.sendStatus(500)
     }
-    
+
 };
 
 export default auth;
