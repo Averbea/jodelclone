@@ -2,35 +2,33 @@
 
 This is a clone of the german social media plattform "Jodel" 
 
-Please keep in mind that this is a hobby project for learning purposes and far from production ready. Bugs will be there. 
+Please keep in mind that this is a hobby project for learning purposes and far from production ready.
 
 ## How to run
-For this project Docker and Node are needed
+For this project **Docker** and **Node** are needed
 
-Install all node modules in `./server` and `./client`. 
-This is only needed on the first run
+Install all node modules in `./server` and `./client` with:
 ``` bash
-    cd server
-    npm install
-    cd ../client
     npm install
 ```
-You need 3 terminals: 
+This is only needed on the first run
+
+
 ### Database
+In `./server` run:
 ``` bash
-    cd server
     npm run start-db
 ```
 
 ### Node Server
+in `./server` run:
 ``` bash
-    cd server
     npm run start
 ```
 
 ### Frontend-Server
+in `./client` run:
 ``` bash
-    cd client
     npm start
 ```
 
