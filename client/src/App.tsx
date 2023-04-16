@@ -9,6 +9,7 @@ import { AuthProvider, useAuth } from './components/Auth';
 import CreatePost from './components/CreatePost/CreatePost';
 import PostDetails from './components/PostDetails/PostDetails';
 import Me from './components/Me/Me';
+import CreateComment from './components/CreateComment/CreateComment';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
               <Route element={<PrivateRoutes/>}>
                 <Route path="/" element={<Feed />} />
                 <Route path="/posts/:id" element={<PostDetails />} />
+                <Route path="/posts/:id/comment" element={<CreateComment />} />
                 <Route path="/createPost" element={<CreatePost/>}/>
                 <Route path="/Me" element={<Me/>}/>
                 <Route path="*" element={<NotFound />} />

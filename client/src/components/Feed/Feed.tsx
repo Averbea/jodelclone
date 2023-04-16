@@ -30,7 +30,7 @@ export default function Feed() {
   },[])
   
   
-  const vote = async ( postId: String, v: "up" | "down") => {
+  const vote = async ( postId: string, v: "up" | "down") => {
     const response =  await votePost(postId, v)
     const newPost:IPost = response.data
     setPosts((old) => old.map(prev => {
@@ -43,7 +43,7 @@ export default function Feed() {
 
   }
 
-  const deleteThisPost = async (postId: String) => {
+  const deleteThisPost = async (postId: string) => {
     const response = await deletePost(postId)
     if( response instanceof Error){
       return 

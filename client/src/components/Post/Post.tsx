@@ -11,8 +11,8 @@ export default function Post({ postData, usedAsComment = false, onClick = () => 
   postData: IPost,
   usedAsComment?: boolean,
   onClick?: Function,
-  onVotePost: (postId: String, vote: "up" | "down") => void,
-  onDeletePost: (postId: String) => void
+  onVotePost: (postId: string, vote: "up" | "down") => void,
+  onDeletePost: (postId: string) => void
 }) {
 
   return (

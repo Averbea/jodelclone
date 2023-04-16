@@ -6,7 +6,11 @@ import { deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } 
 import { useNavigate, useParams } from 'react-router-dom'
 import Post from '../Post/Post'
 import Comment from '../Post/Comment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
+
+import './PostDetaills.css'
 
 export default function PostDetails() {
   const [post, setPost] = useState<IPost | null>(null)
@@ -31,16 +35,16 @@ export default function PostDetails() {
 
 
   const commentComponents = comments.map((c) => {
-    return <Comment commentData={c} />
+    return <Comment key={c._id} commentData={c} />
   })
 
-  const vote = async (postId: String, v: "up" | "down") => {
+  const vote = async (postId: string, v: "up" | "down") => {
     const response = await votePost(postId, v)
     const newPost: IPost = response.data
     setPost(newPost)
   }
 
-  const onDeletePost = async (postId: String) => {
+  const onDeletePost = async (postId: string) => {
     await deletePost(postId)
     navigate(-1)
   }
@@ -52,6 +56,10 @@ export default function PostDetails() {
         <>
           {commentComponents}
         </>
+
+        <button className="createCommentButton" onClick={() => navigate("./comment")}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
       </Container>
     </>
   )

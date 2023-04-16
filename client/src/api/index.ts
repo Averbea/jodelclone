@@ -28,19 +28,19 @@ API.interceptors.response.use((res: any) => {
 
 
 export interface IUserToken {
-  token: String,
-  username: String
+  token: string,
+  username: string
 }
 
-export const signUp = async (username: String, password: String, confirmPassword: String) => API.post<IUserToken>('/users/signup', { username, password, confirmPassword })
-export const signIn = async (username: String, password: String) => API.post<IUserToken>('/users/signin', { username, password })
+export const signUp = async (username: string, password: string, confirmPassword: string) => API.post<IUserToken>('/users/signup', { username, password, confirmPassword })
+export const signIn = async (username: string, password: string) => API.post<IUserToken>('/users/signin', { username, password })
 
 export const signOut = async () => API.post('/users/signout')
 
 export interface IPost {
-  _id: String,
+  _id: string,
   isUsersPost: boolean,
-  message: String,
+  message: string,
   votes: number,
   userVote: "none" | "up" | "down",
   commentAmount: number,
@@ -50,25 +50,26 @@ export interface IPost {
 export const fetchPosts = () => API.get<IPost[]>(`/posts`);
 export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
 
-export const createPost = (message: String) => API.post<String>('/posts/create', { message })
+export const createPost = (message: string) => API.post<string>('/posts/create', { message })
 
 
-export const votePost = (postId: String, vote: "up" | "down") => API.post<IPost>(`/posts/${postId}/vote`, { vote })
-export const deletePost = (postId: String) => API.delete(`/posts/${postId}`)
+export const votePost = (postId: string, vote: "up" | "down") => API.post<IPost>(`/posts/${postId}/vote`, { vote })
+export const deletePost = (postId: string) => API.delete(`/posts/${postId}`)
 
 
 export interface IComment {
-  _id: String,
+  _id: string,
   isUsersPost: boolean,
-  message: String,
+  message: string,
   createdAt: string,
   userVote: "none" | "up" | "down",
   votes: number
 }
 
 export interface ICommentAPIResponse {
-  _id: String,
+  _id: string,
   comments: [IComment]
 }
 
-export const getCommentsForPost = (postId: String) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments`)
+export const getCommentsForPost = (postId: string) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments`)
+export const commentPost = (postId: string, message: string) => API.post(`/posts/${postId}/comment`, { message }) 

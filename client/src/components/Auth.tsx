@@ -1,17 +1,17 @@
-import {createContext, useContext, useState} from 'react'
-import {Buffer} from 'buffer'
+import { createContext, useContext, useState } from 'react'
+import { Buffer } from 'buffer'
 
 import * as api from '../api'
 const AuthContext = createContext({
   isLoggedIn: () => false,
   username: "",
-  onLogin: async (username: String, password: String) => {}, 
-  onLogout: async () =>  {},
-  onSignUp: async (username: String, password: String, repeatPassword: String) => {}
+  onLogin: async (username: string, password: string) => { },
+  onLogout: async () => { },
+  onSignUp: async (username: string, password: string, repeatPassword: string) => { }
 })
 
 export const useAuth = () => {
-    return useContext(AuthContext)
+  return useContext(AuthContext)
 }
 
 
@@ -24,7 +24,7 @@ const parseJwt = (token: string) => {
   }
 };
 
-function isExpired (token: string) {
+function isExpired(token: string) {
   const decodedJwt = parseJwt(token);
   if (decodedJwt?.exp * 1000 < Date.now()) {
     return true
@@ -32,33 +32,33 @@ function isExpired (token: string) {
   return false
 }
 
-export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // TODO: sync with localStorage correctly
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('User') || "{}") || null);
-  
-  async function handleLogin(username: String, password:String){
-      const temp = await api.signIn(username, password);
-      const user =  {
-        token: temp.data.token,
-        username: temp.data.username
-      }
-      localStorage.setItem('User', JSON.stringify(user))
-      setUser(user);
+
+  async function handleLogin(username: string, password: string) {
+    const temp = await api.signIn(username, password);
+    const user = {
+      token: temp.data.token,
+      username: temp.data.username
+    }
+    localStorage.setItem('User', JSON.stringify(user))
+    setUser(user);
   };
 
-  async function handleLogout (){
+  async function handleLogout() {
     localStorage.removeItem('User')
     setUser(null);
     await api.signOut();
   };
 
-  async function handleSignUp(username: String, password:String, repeatPassword: String){
-    const res = await api.signUp(username, password, repeatPassword )
-    if(res.status !== 200){
+  async function handleSignUp(username: string, password: string, repeatPassword: string) {
+    const res = await api.signUp(username, password, repeatPassword)
+    if (res.status !== 200) {
       let tmp: any = res
       throw new Error(tmp.response.data.message)
     }
-    const user =  {
+    const user = {
       token: res.data.token,
       username: res.data.username
     }
@@ -66,10 +66,10 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
     setUser(res.data)
   }
 
-  function isLoggedIn(){
+  function isLoggedIn() {
     // this checks if the user is expired on every usage of the token and syncs to localstorage
-    if(!user) return false
-    if(user?.token && isExpired(user.token)){
+    if (!user) return false
+    if (user?.token && isExpired(user.token)) {
       handleLogout()
       return false
     }

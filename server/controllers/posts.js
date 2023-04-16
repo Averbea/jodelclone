@@ -156,7 +156,7 @@ export const getCommentsForPost = async (req, res) => {
 
         let toRet = {
             _id: commentsFromDb._id,
-            comments: commentsFromDb.comments.map(c => reduceCommentToNecessaryData(c))
+            comments: commentsFromDb.comments.map(c => reduceCommentToNecessaryData(c, req.userId))
         }
 
         res.status(200).json(toRet)

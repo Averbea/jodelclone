@@ -46,8 +46,8 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
     data: IPost | IComment,
     type: "post" | "comment",
     onClick?: Function,
-    onVotePost: (postId: String, vote: "up" | "down") => void,
-    onDeletePost: (postId: String) => void
+    onVotePost: (postId: string, vote: "up" | "down") => void,
+    onDeletePost: (postId: string) => void
 }) {
 
     const usedAsComment = type === "comment"
@@ -80,7 +80,6 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
         <div className='post' style={{ backgroundColor: backgroundColor }} onClick={() => onClick()}>
             <div className='header'>
                 {!usedAsComment && "channel" in data && <p className='channel'>@{data.channel}</p>}
-
                 <p>nah</p>
                 <p>•</p>
                 <p>{getTimeToDisplay(data.createdAt)}</p>
