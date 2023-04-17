@@ -42,6 +42,8 @@ export default function Feed() {
   }
 
   const deleteThisPost = async (postId: string) => {
+    let confirm = window.confirm("Do you really want to delete this post?")
+    if (!confirm) return
     const response = await deletePost(postId)
     if (response instanceof Error) {
       return
