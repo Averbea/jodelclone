@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
-import './PostDetaills.css'
+import './PostDetails.css'
 
 export default function PostDetails() {
   const [post, setPost] = useState<IPost | null>(null)
