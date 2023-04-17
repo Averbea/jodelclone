@@ -45,6 +45,7 @@ export default function PostDetails() {
     if (!post) return
     await apiDeleteComment(post._id, commentId)
     setComments((prev) => prev.filter((comment) => comment._id !== commentId))
+    setPost(prev => prev ? { ...prev, commentAmount: prev.commentAmount - 1 } : prev)
   }
 
   const commentComponents = comments.map((c) => {
