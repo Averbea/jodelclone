@@ -9,34 +9,32 @@ import Post from '../Post/Post'
 import SortingHeader from '../SortingHeader/SortingHeader'
 
 import './Feed.css'
-import  Container  from '../Container/Container'
-import {IPost} from '../../api'
+import Container from '../Container/Container'
+import { IPost } from '../../api'
 
 export default function Feed() {
 
   const [posts, setPosts] = useState<IPost[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
- 
-  console.log(posts)
+
   useEffect(() => {
     fetchPosts().then((response) => {
-      console.log(response)
-      if(response){
+      if (response) {
         setPosts(response.data)
         setLoading(false)
       }
     }).catch((error) => console.log(error))
-  },[])
-  
-  
-  const vote = async ( postId: string, v: "up" | "down") => {
-    const response =  await votePost(postId, v)
-    const newPost:IPost = response.data
+  }, [])
+
+
+  const vote = async (postId: string, v: "up" | "down") => {
+    const response = await votePost(postId, v)
+    const newPost: IPost = response.data
     setPosts((old) => old.map(prev => {
-      if(prev._id === newPost._id){
+      if (prev._id === newPost._id) {
         return newPost
-      }else{
+      } else {
         return prev
       }
     }))
@@ -45,29 +43,29 @@ export default function Feed() {
 
   const deleteThisPost = async (postId: string) => {
     const response = await deletePost(postId)
-    if( response instanceof Error){
-      return 
+    if (response instanceof Error) {
+      return
     }
     setPosts((prev) => prev.filter(post => post._id !== postId))
   }
-  
-  const postContent = posts.map((post: any) => 
-    <Post key={post._id} postData={post} onVotePost={vote} onDeletePost={deleteThisPost} onClick={() => navigate(`/posts/${post._id}`)}/> 
+
+  const postContent = posts.map((post: any) =>
+    <Post key={post._id} postData={post} onVotePost={vote} onDeletePost={deleteThisPost} onClick={() => navigate(`/posts/${post._id}`)} />
   )
-  
+
   return (
     <>
       <SortingHeader />
       <Container>
         {postContent}
         {loading && "loading"}
-        <button className="createButton" onClick={() => navigate("/createPost")}> 
-            <FontAwesomeIcon icon={faPlus}/> 
+        <button className="createButton" onClick={() => navigate("/createPost")}>
+          <FontAwesomeIcon icon={faPlus} />
         </button>
-        
+
       </Container>
-    
-      
+
+
     </>
   )
 }

@@ -37,7 +37,8 @@ export default function PostDetails() {
   async function voteComment(commentId: string, vote: "up" | "down") {
     if (!post) return
     let response = await apiVoteComment(post._id, commentId, vote)
-    console.log(response.data)
+    let newComment = response.data
+    setComments(prev => prev.map((c => c._id === newComment._id ? newComment : c)))
   }
 
   async function deleteComment(commentId: string) {
