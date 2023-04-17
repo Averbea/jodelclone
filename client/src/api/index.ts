@@ -72,4 +72,7 @@ export interface ICommentAPIResponse {
 }
 
 export const getCommentsForPost = (postId: string) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments`)
-export const commentPost = (postId: string, message: string) => API.post(`/posts/${postId}/comment`, { message }) 
+export const commentPost = (postId: string, message: string) => API.post(`/posts/${postId}/comment`, { message })
+
+export const apiVoteComment = (postId: string, commentId: string, vote: "up" | "down") => API.post<IComment>(`/posts/${postId}/${commentId}/vote`, { vote })
+export const apiDeleteComment = (postId: string, commentId: string) => API.delete(`/posts/${postId}/${commentId}`)

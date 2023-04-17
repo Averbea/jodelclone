@@ -1,5 +1,6 @@
 import express from "express";
-import { getPosts, getPost, createPost, votePost, deletePost, commentPost, getCommentsForPost } from "../controllers/posts.js"
+import { getPosts, getPost, createPost, votePost, deletePost, } from "../controllers/posts.js"
+import { commentPost, getCommentsForPost, deleteComment, voteComment } from "../controllers/comments.js";
 
 import auth from '../middleware/auth.js';
 
@@ -15,5 +16,8 @@ router.post("/:id/vote", auth, votePost)
 
 router.post("/:id/comment", auth, commentPost)
 router.get("/:id/comments", auth, getCommentsForPost)
+
+router.post("/:id/:commentId/vote", auth, voteComment)
+router.delete("/:id/:commentId", auth, deleteComment)
 
 export default router;

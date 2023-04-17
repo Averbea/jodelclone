@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BackHeader from '../BackHeader/BackHeader'
 import Container from '../Container/Container'
 
-import { deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } from '../../api'
+import { apiDeleteComment, apiVoteComment, deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } from '../../api'
 import { useNavigate, useParams } from 'react-router-dom'
 import Post from '../Post/Post'
 import Comment from '../Post/Comment'
@@ -34,8 +34,20 @@ export default function PostDetails() {
   }, [id])
 
 
+  async function voteComment(commentId: string, vote: "up" | "down") {
+    if (!post) return
+    let response = await apiVoteComment(post._id, commentId, vote)
+    console.log(response.data)
+  }
+
+  async function deleteComment(commentId: string) {
+    if (!post) return
+    await apiDeleteComment(post._id, commentId)
+    setComments((prev) => prev.filter((comment) => comment._id !== commentId))
+  }
+
   const commentComponents = comments.map((c) => {
-    return <Comment key={c._id} commentData={c} />
+    return <Comment key={c._id} commentData={c} onVoteComment={voteComment} onDeleteComment={deleteComment} />
   })
 
   const vote = async (postId: string, v: "up" | "down") => {
