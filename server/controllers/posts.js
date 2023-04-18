@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import { PostModel } from "../models/postSchema.js"
+import CommentModel from "../models/commentSchema.js"
 
 
 //#region _____________API Handlers__________________________
@@ -16,10 +17,22 @@ export const onGetPost = async (req, res) => {
 }
 
 export const onDeletePost = async (req, res) => {
+    let id
     try {
-        const response = await PostModel.deleteOne(new mongoose.Types.ObjectId(req.params))
+        id = new mongoose.Types.ObjectId(req.params)
+    } catch (error) {
+        return res.sendStatus(400)
+    }
+
+    try {
+        const response = await PostModel.findByIdAndDelete(id)
+        if (!response) return res.sendStatus(400)
+        for (let comment of response.comments) {
+            CommentModel.findByIdAndDelete(comment).exec() // we do not care for the result here
+        }
         res.sendStatus(200)
     } catch (error) {
+        console.log(error)
         res.sendStatus(500)
     }
 }
@@ -121,11 +134,5 @@ function reducePostToNecessaryData(post, userId) {
 
     }
 }
-
-
-function addCommentToPost(postId, comment) {
-
-}
-
 
 // #endregion
