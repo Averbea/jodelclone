@@ -22,7 +22,7 @@ export default function CreateComment() {
     try {
 
       const response = await Api.commentPost(postId, text)
-      navigate(`/posts/${postId}`, { replace: true })
+      navigate(-1)
     } catch (error) {
 
     }
