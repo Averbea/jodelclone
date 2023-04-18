@@ -2,7 +2,12 @@ import mongoose from "mongoose"
 import { CommentModel } from "../models/commentSchema.js"
 import { PostModel } from "../models/postSchema.js"
 
-export const commentPost = async (req, res) => {
+
+
+//#region _____________API Handlers__________________________
+
+
+export const onCommentPost = async (req, res) => {
     try {
         const postId = req.params.id
         const { message } = req.body
@@ -34,8 +39,7 @@ export const commentPost = async (req, res) => {
 
 }
 
-
-export const getCommentsForPost = async (req, res) => {
+export const onGetCommentsForPost = async (req, res) => {
     try {
         const postId = req.params.id
         //TODO: add pagination
@@ -59,31 +63,7 @@ export const getCommentsForPost = async (req, res) => {
     }
 }
 
-
-
-const reduceCommentToNecessaryData = (comment, userId) => {
-    const isUsersPost = comment.author === userId ? true : false;
-    let userVote = "none"
-    if (comment.upvotes.includes(userId)) {
-        userVote = "up"
-    }
-    else if (comment.downvotes.includes(userId)) {
-        userVote = "down"
-    }
-
-    return {
-        _id: comment._id,
-        isUsersPost,
-        message: comment.message,
-        votes: comment.upvotes.length - comment.downvotes.length,
-        userVote: userVote,
-        createdAt: comment.createdAt
-    }
-}
-
-
-
-export const voteComment = async (req, res) => {
+export const onVoteComment = async (req, res) => {
     try {
         const postId = req.params.id
         const commentId = req.params.commentId
@@ -125,18 +105,18 @@ export const voteComment = async (req, res) => {
             const newComment = reduceCommentToNecessaryData(newData, req.userId)
             res.status(200).json(newComment)
             return
-        } 
+        }
 
         res.sendStatus(400)
         return
-  
+
     } catch (error) {
         console.log(error)
         res.sendStatus(500)
     }
 }
 
-export const deleteComment = async (req, res) => {
+export const onDeleteComment = async (req, res) => {
     try {
         const postId = req.params.id
         const commentId = req.params.commentId
@@ -158,3 +138,31 @@ export const deleteComment = async (req, res) => {
         res.sendStatus(500)
     }
 }
+
+//#endregion
+
+
+//#region _____________Helper Functions______________________
+
+function reduceCommentToNecessaryData(comment, userId) {
+    const isUsersPost = comment.author === userId ? true : false;
+    let userVote = "none"
+    if (comment.upvotes.includes(userId)) {
+        userVote = "up"
+    }
+    else if (comment.downvotes.includes(userId)) {
+        userVote = "down"
+    }
+
+    return {
+        _id: comment._id,
+        isUsersPost,
+        message: comment.message,
+        votes: comment.upvotes.length - comment.downvotes.length,
+        userVote: userVote,
+        createdAt: comment.createdAt
+    }
+}
+
+
+//#endregion

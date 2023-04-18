@@ -1,23 +1,23 @@
 import express from "express";
-import { getPosts, getPost, createPost, votePost, deletePost, } from "../controllers/posts.js"
-import { commentPost, getCommentsForPost, deleteComment, voteComment } from "../controllers/comments.js";
+import {  onCreatePost, onDeletePost, onGetPost, onGetPosts, onVotePosts, } from "../controllers/posts.js"
+import { onCommentPost, onDeleteComment, onGetCommentsForPost, onVoteComment } from "../controllers/comments.js";
 
 import auth from '../middleware/auth.js';
 
 const router = express.Router()
 
-router.get("/", auth, getPosts);
-router.post("/create", auth, createPost)
+router.get("/", auth, onGetPosts);
+router.post("/create", auth, onCreatePost)
 
-router.get("/:id", auth, getPost)
-router.delete("/:id", auth, deletePost)
+router.get("/:id", auth, onGetPost)
+router.delete("/:id", auth, onDeletePost)
 
-router.post("/:id/vote", auth, votePost)
+router.post("/:id/vote", auth, onVotePosts)
 
-router.post("/:id/comment", auth, commentPost)
-router.get("/:id/comments", auth, getCommentsForPost)
+router.post("/:id/comment", auth, onCommentPost)
+router.get("/:id/comments", auth, onGetCommentsForPost)
 
-router.post("/:id/:commentId/vote", auth, voteComment)
-router.delete("/:id/:commentId", auth, deleteComment)
+router.post("/:id/:commentId/vote", auth, onVoteComment)
+router.delete("/:id/:commentId", auth, onDeleteComment)
 
 export default router;

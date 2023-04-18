@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import UserModel from '../models/userSchema.js';
 
-export const signout = async (req, res) => {
+export const onSignOut = async (req, res) => {
     //TODO make logged out users unable to login with the old token 
     const { userId } = req
     console.log(req)
@@ -12,7 +12,7 @@ export const signout = async (req, res) => {
     res.sendStatus(200)
 }
 
-export const signin = async (req, res) => {
+export const onSignIn = async (req, res) => {
     try {
         const { username, password } = req.body;
         console.log(req.body)
@@ -33,7 +33,7 @@ export const signin = async (req, res) => {
     }
 };
 
-export const signup = async (req, res) => {
+export const onSignUp = async (req, res) => {
     try {
 
         const { username, password, confirmPassword } = req.body;

@@ -1,7 +1,10 @@
 import mongoose from "mongoose"
 import { PostModel } from "../models/postSchema.js"
 
-export const getPost = async (req, res) => {
+
+//#region _____________API Handlers__________________________
+
+export const onGetPost = async (req, res) => {
     try {
         const post = await PostModel.findById(new mongoose.Types.ObjectId(req.params))
         const postToSend = reducePostToNecessaryData(post, req.userId)
@@ -12,7 +15,7 @@ export const getPost = async (req, res) => {
     }
 }
 
-export const deletePost = async (req, res) => {
+export const onDeletePost = async (req, res) => {
     try {
         const response = await PostModel.deleteOne(new mongoose.Types.ObjectId(req.params))
         res.sendStatus(200)
@@ -21,31 +24,7 @@ export const deletePost = async (req, res) => {
     }
 }
 
-const reducePostToNecessaryData = (post, userId) => {
-    const isUsersPost = post.author === userId ? true : false;
-    let userVote = "none"
-    if (post.upvotes.includes(userId)) {
-        userVote = "up"
-    }
-    else if (post.downvotes.includes(userId)) {
-        userVote = "down"
-    }
-
-
-    return {
-        _id: post._id,
-        isUsersPost,
-        message: post.message,
-        votes: post.upvotes.length - post.downvotes.length,
-        userVote: userVote,
-        commentAmount: post.comments.length,
-        channel: post.channel,
-        createdAt: post.createdAt
-
-    }
-}
-
-export const getPosts = async (req, res) => {
+export const onGetPosts = async (req, res) => {
     try {
         const postsFromDb = await PostModel.find().sort({ _id: -1 })
         const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId))
@@ -56,7 +35,7 @@ export const getPosts = async (req, res) => {
     }
 }
 
-export const createPost = async (req, res) => {
+export const onCreatePost = async (req, res) => {
     const post = req.body;
     const { message } = post
     const newPost = new PostModel({ message: message, channel: "main", author: req.userId, createdAt: new Date().toISOString() });
@@ -68,8 +47,7 @@ export const createPost = async (req, res) => {
     }
 }
 
-
-export const votePost = async (req, res) => {
+export const onVotePosts = async (req, res) => {
     try {
         const { vote } = req.body
 
@@ -116,8 +94,38 @@ export const votePost = async (req, res) => {
 
 }
 
+//#endregion
+
+//#region _____________Helper Functions______________________
+
+
+function reducePostToNecessaryData(post, userId) {
+    const isUsersPost = post.author === userId ? true : false;
+    let userVote = "none"
+    if (post.upvotes.includes(userId)) {
+        userVote = "up"
+    }
+    else if (post.downvotes.includes(userId)) {
+        userVote = "down"
+    }
+
+    return {
+        _id: post._id,
+        isUsersPost,
+        message: post.message,
+        votes: post.upvotes.length - post.downvotes.length,
+        userVote: userVote,
+        commentAmount: post.comments.length,
+        channel: post.channel,
+        createdAt: post.createdAt
+
+    }
+}
 
 
 function addCommentToPost(postId, comment) {
 
 }
+
+
+// #endregion
