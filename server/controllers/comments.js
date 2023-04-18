@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import { CommentModel } from "../models/commentSchema.js"
 import { PostModel } from "../models/postSchema.js"
 
+import { getIdFromParams } from './posts.js'
 
 
 //#region _____________API Handlers__________________________
@@ -9,8 +10,10 @@ import { PostModel } from "../models/postSchema.js"
 
 export const onCommentPost = async (req, res) => {
     try {
-        const postId = req.params.id
+        const postId = getIdFromParams(req)
         const { message } = req.body
+
+        if (!postId || !message) return res.sendStatus(400)
 
         const newComment = new CommentModel({ message: message, author: req.userId, createdAt: new Date().toISOString() });
 
@@ -41,14 +44,17 @@ export const onCommentPost = async (req, res) => {
 
 export const onGetCommentsForPost = async (req, res) => {
     try {
-        const postId = req.params.id
+        const postId = getIdFromParams(req)
+        if (!postId) return res.sendStatus(400)
         //TODO: add pagination
         const commentsFromDb = await PostModel.findById(
-            req.params.id,
+            postId,
             "comments", {
             populate: "comments"
         }
         )
+
+        if (!commentsFromDb) return res.sendStatus(400) // post does not exist
 
         let toRet = {
             _id: commentsFromDb._id,
@@ -65,8 +71,10 @@ export const onGetCommentsForPost = async (req, res) => {
 
 export const onVoteComment = async (req, res) => {
     try {
-        const postId = req.params.id
-        const commentId = req.params.commentId
+        const postId = getIdFromParams(req)
+        const commentId = getCommentIdFromParams(req)
+        if (!postId || !commentId) return res.sendStatus(400)
+
 
         const { vote } = req.body
 
@@ -89,7 +97,7 @@ export const onVoteComment = async (req, res) => {
 
         const newData = await CommentModel.findOneAndUpdate(
             {
-                _id: req.params.commentId,
+                _id: commentId,
                 upvotes: { "$ne": req.userId },
                 downvotes: { "$ne": req.userId }
             },
@@ -118,12 +126,13 @@ export const onVoteComment = async (req, res) => {
 
 export const onDeleteComment = async (req, res) => {
     try {
-        const postId = req.params.id
-        const commentId = req.params.commentId
+        const postId = getIdFromParams(req)
+        const commentId = getCommentIdFromParams(req)
+        if (!postId || !commentId) return res.sendStatus(400)
 
-        let result = await CommentModel.findByIdAndDelete(req.params.commentId)
+        let result = await CommentModel.findByIdAndDelete(commentId)
         if (result) {
-            let t = await PostModel.findByIdAndUpdate(postId,
+            await PostModel.findByIdAndUpdate(postId,
                 {
                     $pull: {
                         comments: result._id
@@ -161,6 +170,14 @@ function reduceCommentToNecessaryData(comment, userId) {
         votes: comment.upvotes.length - comment.downvotes.length,
         userVote: userVote,
         createdAt: comment.createdAt
+    }
+}
+
+export function getCommentIdFromParams(req) {
+    try {
+        return new mongoose.Types.ObjectId(req.params.commentId)
+    } catch (error) {
+
     }
 }
 

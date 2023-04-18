@@ -6,23 +6,21 @@ import CommentModel from "../models/commentSchema.js"
 //#region _____________API Handlers__________________________
 
 export const onGetPost = async (req, res) => {
+    let id = getIdFromParams(req)
+    if (!id) return res.sendStatus(400)
+
     try {
-        const post = await PostModel.findById(new mongoose.Types.ObjectId(req.params))
+        const post = await PostModel.findById(id)
         const postToSend = reducePostToNecessaryData(post, req.userId)
         res.status(200).json(postToSend)
     } catch (error) {
-
         res.sendStatus(500)
     }
 }
 
 export const onDeletePost = async (req, res) => {
-    let id
-    try {
-        id = new mongoose.Types.ObjectId(req.params)
-    } catch (error) {
-        return res.sendStatus(400)
-    }
+    let id = getIdFromParams(req)
+    if (!id) return res.sendStatus(401)
 
     try {
         const response = await PostModel.findByIdAndDelete(id)
@@ -51,6 +49,9 @@ export const onGetPosts = async (req, res) => {
 export const onCreatePost = async (req, res) => {
     const post = req.body;
     const { message } = post
+
+    if (!message) return res.sendStatus(400)
+
     const newPost = new PostModel({ message: message, channel: "main", author: req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save()
@@ -61,6 +62,8 @@ export const onCreatePost = async (req, res) => {
 }
 
 export const onVotePosts = async (req, res) => {
+    let id = getIdFromParams(req)
+    if (!id) return res.sendStatus(400)
     try {
         const { vote } = req.body
 
@@ -82,7 +85,7 @@ export const onVotePosts = async (req, res) => {
 
         const newData = await PostModel.findOneAndUpdate(
             {
-                _id: req.params.id,
+                _id: id,
                 upvotes: { "$ne": req.userId },
                 downvotes: { "$ne": req.userId }
             },
@@ -111,6 +114,13 @@ export const onVotePosts = async (req, res) => {
 
 //#region _____________Helper Functions______________________
 
+export function getIdFromParams(req) {
+    try {
+        return new mongoose.Types.ObjectId(req.params.id)
+    } catch (error) {
+
+    }
+}
 
 function reducePostToNecessaryData(post, userId) {
     const isUsersPost = post.author === userId ? true : false;
