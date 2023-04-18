@@ -24,15 +24,17 @@ export default function PostDetails() {
     if (!id) return
     fetchPost(id).then(
       (response) => {
-        setPost(response.data)
+        if (response.data) {
+          setPost(response.data)
+          getCommentsForPost(id!).then(
+            (res) => setComments(res.data.comments)
+          )
+        } else {
+          navigate("/notfound", { replace: true })
+        }
       }
     )
-    getCommentsForPost(id).then(
-      (res) => setComments(res.data.comments)
-    )
-
-  }, [id])
-
+  }, [id, navigate])
 
   async function voteComment(commentId: string, vote: "up" | "down") {
     if (!post) return
