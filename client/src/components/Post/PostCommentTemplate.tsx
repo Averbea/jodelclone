@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IComment, IPost } from '../../api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons'
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog'
 
 
 
@@ -50,12 +51,14 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
     onDeletePost: (postId: string) => void
 }) {
 
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+
     const usedAsComment = type === "comment"
 
 
     const deletePost = (event: React.MouseEvent) => {
         event.stopPropagation();
-        onDeletePost(data._id)
+        setShowDeleteDialog(true)
     }
     const vote = (event: React.MouseEvent, v: "up" | "down") => {
         event.stopPropagation();
@@ -103,6 +106,11 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
             </div>
 
             {!usedAsComment && "commentAmount" in data && <div className='comments'>{data.commentAmount} Kommentare</div>}
+
+
+            {showDeleteDialog && <ConfirmDialog onCancel={() => setShowDeleteDialog(false)} onConfirm={() => onDeletePost(data._id)}>
+                Do you really want to delete this {type.charAt(0).toUpperCase() + type.slice(1)}?
+            </ConfirmDialog>}
 
         </div>
     )

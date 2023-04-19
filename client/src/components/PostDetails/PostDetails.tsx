@@ -63,8 +63,6 @@ export default function PostDetails() {
   }
 
   const onDeletePost = async (postId: string) => {
-    let confirm = window.confirm("Do you really want to delete this post?")
-    if (!confirm) return
     await deletePost(postId)
     navigate(-1)
   }
