@@ -36,8 +36,35 @@ export const onDeletePost = async (req, res) => {
 }
 
 export const onGetPosts = async (req, res) => {
+
+    let limit = req.query.limit | 10
+    let skip = req.query.skip | 0
+
+    let sortBy 
+    if (req.query.sort == "comments") {
+        sortBy = { commentAmount: -1 };
+    } else if (req.query.sort == "votes") {
+        sortBy = { voteAmount: -1 };
+    } else {
+        sortBy = { createdAt: -1 }
+    }
+
     try {
-        const postsFromDb = await PostModel.find().sort({ _id: -1 })
+        const postsFromDb = await PostModel.aggregate([{
+            "$addFields": {
+                "voteAmount": {
+                    $subtract: [{ $size: "$upvotes" }, { $size: "$downvotes" }]
+                },
+                "commentAmount": {
+                    $size: "$comments"
+                }
+            }
+        },
+        {
+            $sort: sortBy
+        }
+        ]).skip(skip).limit(limit)
+
         const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId))
         res.status(200).json(posts);
 
