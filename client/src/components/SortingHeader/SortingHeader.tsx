@@ -1,16 +1,31 @@
-import React from 'react'
-
 import './SortingHeader.css'
 
-export default function SortingHeader() {
-  return (
-      <div className='navbar'>
-  
-            <p className='headerMenuItem activeSortingItem'>Neueste</p>
-            <p className='headerMenuItem'>Meist kommentierte</p>
-            <p className='headerMenuItem'>Lauteste</p>
+interface Props {
+  setActive: (sort: SortType) => void,
+  active: SortType
+}
 
-      </div>
-  
+export type SortType = "date" | "votes" | "comments"
+
+export default function SortingHeader({ setActive, active }: Props) {
+  return (
+    <div className='navbar'>
+      <button
+        className={active === "date" ? "headerMenuItem activeSortingItem" : "headerMenuItem "}
+        onClick={() => setActive("date")}>
+        Neueste
+      </button>
+      <button
+        className={active === "comments" ? "headerMenuItem activeSortingItem" : "headerMenuItem "}
+        onClick={() => setActive("comments")}>
+        Meist kommentierte
+      </button>
+      <button
+        className={active === "votes" ? "headerMenuItem activeSortingItem" : "headerMenuItem "}
+        onClick={() => setActive("votes")}>
+        Lauteste
+      </button>
+    </div>
+
   )
 }

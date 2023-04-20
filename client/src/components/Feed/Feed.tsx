@@ -6,26 +6,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import Post from '../Post/Post'
-import SortingHeader from '../SortingHeader/SortingHeader'
+import SortingHeader, { SortType } from '../SortingHeader/SortingHeader'
 
 import './Feed.css'
 import Container from '../Container/Container'
 import { IPost } from '../../api'
 
 export default function Feed() {
-
+  const [sortBy, setSortBy] = useState<SortType>("date")
   const [posts, setPosts] = useState<IPost[]>([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchPosts().then((response) => {
+    fetchPosts(sortBy).then((response) => {
       if (response) {
         setPosts(response.data)
         setLoading(false)
       }
     }).catch((error) => console.log(error))
-  }, [])
+  }, [sortBy])
 
 
   const vote = async (postId: string, v: "up" | "down") => {
@@ -52,10 +52,9 @@ export default function Feed() {
   const postContent = posts.map((post: any) =>
     <Post key={post._id} postData={post} onVotePost={vote} onDeletePost={deleteThisPost} onClick={() => navigate(`/posts/${post._id}`)} />
   )
-
   return (
     <>
-      <SortingHeader />
+      <SortingHeader active={sortBy} setActive={setSortBy} />
       <Container>
         {postContent}
         {loading && "loading"}
