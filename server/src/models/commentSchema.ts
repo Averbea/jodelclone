@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const commentSchema = mongoose.Schema({
+export const commentSchema = new mongoose.Schema({
     author: { type: String, required: true },
     message: { type: String, required: true },
     upvotes: {

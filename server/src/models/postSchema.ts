@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const postSchema = mongoose.Schema({
+export const postSchema = new mongoose.Schema({
     author: { type: String, required: true },
     message: { type: String, required: true },
     channel: { type: String, required: true },

@@ -17,7 +17,7 @@ This is only needed on the first run
 ### Database
 In `./server` run:
 ``` bash
-    npm run start-db
+    npm run dev
 ```
 
 ### Node Server

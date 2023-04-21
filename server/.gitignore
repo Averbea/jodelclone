@@ -1,4 +1,5 @@
 node_modules
 database
+dist
 
 http_testing.http
