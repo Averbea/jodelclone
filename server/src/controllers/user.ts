@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import UserModel from '../models/userSchema';
+import { UserModel } from '../models/userSchema';
+import { Response } from 'express';
+import { CustomRequest } from '../RequestType';
 
-export const onSignOut = async (req, res) => {
+export const onSignOut = async (req: CustomRequest, res: Response) => {
     //TODO make logged out users unable to login with the old token 
     const { userId } = req
     console.log(req)
@@ -12,7 +14,7 @@ export const onSignOut = async (req, res) => {
     res.sendStatus(200)
 }
 
-export const onSignIn = async (req, res) => {
+export const onSignIn = async (req: CustomRequest, res: Response) => {
     try {
         const { username, password } = req.body;
         console.log(req.body)
@@ -24,7 +26,7 @@ export const onSignIn = async (req, res) => {
 
         if (!isPasswordCorrect) return res.status(401).json({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ username: existingUser.username, id: existingUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ username: existingUser.username, id: existingUser._id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
         res.status(200).json({ token, username: username })
     } catch (error) {
@@ -33,19 +35,19 @@ export const onSignIn = async (req, res) => {
     }
 };
 
-export const onSignUp = async (req, res) => {
+export const onSignUp = async (req: CustomRequest, res: Response) => {
     try {
 
         const { username, password, confirmPassword } = req.body;
         const existingUser = await (UserModel.findOne({ username }));
         if (existingUser) return res.status(400).json({ message: "User already eists" });
 
-        if (password !== confirmPassword) return res.status(400).message({ message: "Passwords dont match" });
+        if (password !== confirmPassword) return res.status(400).json({ message: "Passwords dont match" });
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const result = await UserModel.create({ username, password: hashedPassword });
-        const token = jwt.sign({ username: result.username, id: result._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ username: result.username, id: result._id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
         console.log(result)
         res.status(200).json({ token, username: username })
 

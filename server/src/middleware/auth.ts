@@ -1,6 +1,8 @@
-import jwt from 'jsonwebtoken'
+import { NextFunction, Request, Response } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import { CustomRequest } from '../RequestType';
 
-const auth = async (req, res, next) => {
+const auth = async (req: CustomRequest, res: Response, next: NextFunction) => {
 
     try {
 
@@ -10,7 +12,8 @@ const auth = async (req, res, next) => {
         }
         const token = req.headers.authorization.split(" ")[1];
 
-        let decodedData = jwt.verify(token, process.env.JWT_SECRET);
+        let decodedData: any = jwt.verify(token, process.env.JWT_SECRET!);
+
         req.userId = decodedData?.id;
         next();
     } catch (error) {

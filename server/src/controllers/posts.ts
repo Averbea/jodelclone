@@ -1,24 +1,32 @@
-import mongoose from "mongoose"
-import { PostModel } from "../models/postSchema"
-import CommentModel from "../models/commentSchema"
+import mongoose, { AggregateOptions } from "mongoose"
+import { Post, PostModel } from "../models/postSchema"
+import { CommentModel } from "../models/commentSchema"
+import {  CustomRequest } from "../RequestType"
+import { Request, Response } from "express"
 
 
 //#region _____________API Handlers__________________________
+interface tmp extends Request {
+    userId: string
+}
 
-export const onGetPost = async (req, res) => {
+
+export const onGetPost = async (req: CustomRequest, res: Response) => {
     let id = getIdFromParams(req)
     if (!id) return res.sendStatus(400)
 
     try {
         const post = await PostModel.findById(id)
-        const postToSend = reducePostToNecessaryData(post, req.userId)
+        if (!post) return res.sendStatus(400)
+
+        const postToSend = reducePostToNecessaryData(post, req.userId!)
         res.status(200).json(postToSend)
     } catch (error) {
         res.sendStatus(500)
     }
 }
 
-export const onDeletePost = async (req, res) => {
+export const onDeletePost = async (req: CustomRequest, res: Response) => {
     let id = getIdFromParams(req)
     if (!id) return res.sendStatus(401)
 
@@ -35,12 +43,13 @@ export const onDeletePost = async (req, res) => {
     }
 }
 
-export const onGetPosts = async (req, res) => {
+export const onGetPosts = async (req: CustomRequest, res: Response) => {
 
-    let limit = req.query.limit | 10
-    let skip = req.query.skip | 0
+    let limit = Number(req.query.limit) | 10
+    let skip = Number(req.query.skip) | 0
 
-    let sortBy 
+    let sortBy: AggregateOptions
+
     if (req.query.sort == "comments") {
         sortBy = { commentAmount: -1 };
     } else if (req.query.sort == "votes") {
@@ -65,15 +74,15 @@ export const onGetPosts = async (req, res) => {
         }
         ]).skip(skip).limit(limit)
 
-        const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId))
+        const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId!))
         res.status(200).json(posts);
 
-    } catch (error) {
+    } catch (error: any) {
         res.status(404).json({ message: error.message })
     }
 }
 
-export const onCreatePost = async (req, res) => {
+export const onCreatePost = async (req: CustomRequest, res: Response) => {
     const post = req.body;
     const { message } = post
 
@@ -83,12 +92,12 @@ export const onCreatePost = async (req, res) => {
     try {
         await newPost.save()
         res.status(201).json(newPost._id)
-    } catch (error) {
+    } catch (error: any) {
         res.status(409).json(error.message)
     }
 }
 
-export const onVotePosts = async (req, res) => {
+export const onVotePosts = async (req: CustomRequest, res: Response) => {
     let id = getIdFromParams(req)
     if (!id) return res.sendStatus(400)
     try {
@@ -107,8 +116,6 @@ export const onVotePosts = async (req, res) => {
             return
         }
 
-        let queryParam = {}
-        queryParam[toAddTo] = req.userId
 
         const newData = await PostModel.findOneAndUpdate(
             {
@@ -117,7 +124,7 @@ export const onVotePosts = async (req, res) => {
                 downvotes: { "$ne": req.userId }
             },
             {
-                $addToSet: queryParam,
+                $addToSet: { [toAddTo]: req.userId },
             },
             {
                 new: true
@@ -125,7 +132,7 @@ export const onVotePosts = async (req, res) => {
         )
 
         if (newData) {
-            const newPost = reducePostToNecessaryData(newData, req.userId)
+            const newPost = reducePostToNecessaryData(newData, req.userId!)
             res.status(200).json(newPost)
         } else {
             console.log(newData)
@@ -141,7 +148,7 @@ export const onVotePosts = async (req, res) => {
 
 //#region _____________Helper Functions______________________
 
-export function getIdFromParams(req) {
+export function getIdFromParams(req: CustomRequest) {
     try {
         return new mongoose.Types.ObjectId(req.params.id)
     } catch (error) {
@@ -149,7 +156,7 @@ export function getIdFromParams(req) {
     }
 }
 
-function reducePostToNecessaryData(post, userId) {
+function reducePostToNecessaryData(post: Post, userId: string) {
     const isUsersPost = post.author === userId ? true : false;
     let userVote = "none"
     if (post.upvotes.includes(userId)) {

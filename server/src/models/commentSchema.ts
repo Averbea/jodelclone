@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 
-export const commentSchema = new mongoose.Schema({
+export interface Comment {
+    _id: mongoose.Schema.Types.ObjectId,
+    author: string,
+    message: string,
+    upvotes: string[],
+    downvotes: string[],
+    createdAt: Date
+}
+
+export const commentSchema = new mongoose.Schema<Comment>({
     author: { type: String, required: true },
     message: { type: String, required: true },
     upvotes: {
@@ -16,5 +25,3 @@ export const commentSchema = new mongoose.Schema({
 })
 
 export const CommentModel = mongoose.model('Comment', commentSchema)
-
-export default CommentModel

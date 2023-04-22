@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-export const postSchema = new mongoose.Schema({
+export interface Post extends Required<{
+    _id: mongoose.Schema.Types.ObjectId;
+}> {
+    author: string,
+    message: string,
+    channel: string,
+    upvotes: string[],
+    downvotes: string[],
+    comments: mongoose.Schema.Types.ObjectId[],
+    createdAt: Date
+}
+
+
+export const postSchema = new mongoose.Schema<Post>({
     author: { type: String, required: true },
     message: { type: String, required: true },
     channel: { type: String, required: true },
@@ -18,5 +31,3 @@ export const postSchema = new mongoose.Schema({
 })
 
 export const PostModel = mongoose.model('Post', postSchema)
-
-export default PostModel

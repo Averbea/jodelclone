@@ -1,14 +1,16 @@
 import mongoose from "mongoose"
-import { CommentModel } from "../models/commentSchema"
-import { PostModel } from "../models/postSchema"
+import { Comment, CommentModel } from "../models/commentSchema"
+import { Post, PostModel } from "../models/postSchema"
 
 import { getIdFromParams } from './posts'
+import { CustomRequest } from "../RequestType"
+import { Response } from "express"
 
 
 //#region _____________API Handlers__________________________
 
 
-export const onCommentPost = async (req, res) => {
+export const onCommentPost = async (req: CustomRequest, res: Response) => {
     try {
         const postId = getIdFromParams(req)
         const { message } = req.body
@@ -42,23 +44,25 @@ export const onCommentPost = async (req, res) => {
 
 }
 
-export const onGetCommentsForPost = async (req, res) => {
+export const onGetCommentsForPost = async (req: CustomRequest, res: Response) => {
     try {
         const postId = getIdFromParams(req)
         if (!postId) return res.sendStatus(400)
         //TODO: add pagination
-        const commentsFromDb = await PostModel.findById(
+        const commentsFromDb: Omit<Post, "comments"> & {comments: Comment[]} | null = await PostModel.findById(
             postId,
             "comments", {
             populate: "comments"
         }
         )
 
+
+
         if (!commentsFromDb) return res.sendStatus(400) // post does not exist
 
         let toRet = {
             _id: commentsFromDb._id,
-            comments: commentsFromDb.comments.map(c => reduceCommentToNecessaryData(c, req.userId))
+            comments: commentsFromDb.comments.map(c => reduceCommentToNecessaryData(c, req.userId!))
         }
 
         res.status(200).json(toRet)
@@ -69,7 +73,7 @@ export const onGetCommentsForPost = async (req, res) => {
     }
 }
 
-export const onVoteComment = async (req, res) => {
+export const onVoteComment = async (req: CustomRequest, res: Response) => {
     try {
         const postId = getIdFromParams(req)
         const commentId = getCommentIdFromParams(req)
@@ -92,8 +96,6 @@ export const onVoteComment = async (req, res) => {
         }
         console.log("voted", vote, "on", commentId)
 
-        let queryParam = {}
-        queryParam[toAddTo] = req.userId
 
         const newData = await CommentModel.findOneAndUpdate(
             {
@@ -102,7 +104,9 @@ export const onVoteComment = async (req, res) => {
                 downvotes: { "$ne": req.userId }
             },
             {
-                $addToSet: queryParam,
+                $addToSet: {
+                    [toAddTo]: req.userId!
+                },
             },
             {
                 new: true
@@ -110,7 +114,7 @@ export const onVoteComment = async (req, res) => {
         )
 
         if (newData) {
-            const newComment = reduceCommentToNecessaryData(newData, req.userId)
+            const newComment = reduceCommentToNecessaryData(newData, req.userId!)
             res.status(200).json(newComment)
             return
         }
@@ -124,7 +128,7 @@ export const onVoteComment = async (req, res) => {
     }
 }
 
-export const onDeleteComment = async (req, res) => {
+export const onDeleteComment = async (req: CustomRequest, res: Response) => {
     try {
         const postId = getIdFromParams(req)
         const commentId = getCommentIdFromParams(req)
@@ -153,7 +157,8 @@ export const onDeleteComment = async (req, res) => {
 
 //#region _____________Helper Functions______________________
 
-function reduceCommentToNecessaryData(comment, userId) {
+function reduceCommentToNecessaryData(comment: Comment, userId: string) {
+    
     const isUsersPost = comment.author === userId ? true : false;
     let userVote = "none"
     if (comment.upvotes.includes(userId)) {
@@ -173,7 +178,7 @@ function reduceCommentToNecessaryData(comment, userId) {
     }
 }
 
-export function getCommentIdFromParams(req) {
+export function getCommentIdFromParams(req: CustomRequest) {
     try {
         return new mongoose.Types.ObjectId(req.params.commentId)
     } catch (error) {
