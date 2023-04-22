@@ -1,8 +1,8 @@
 import express from "express";
-import {  onCreatePost, onDeletePost, onGetPost, onGetPosts, onVotePosts, } from "../controllers/posts.js"
-import { onCommentPost, onDeleteComment, onGetCommentsForPost, onVoteComment } from "../controllers/comments.js";
+import {  onCreatePost, onDeletePost, onGetPost, onGetPosts, onVotePosts, } from "../controllers/posts"
+import { onCommentPost, onDeleteComment, onGetCommentsForPost, onVoteComment } from "../controllers/comments";
 
-import auth from '../middleware/auth.js';
+import auth from '../middleware/auth';
 
 const router = express.Router()
 

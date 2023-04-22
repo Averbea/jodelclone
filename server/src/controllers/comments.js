@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import { CommentModel } from "../models/commentSchema.js"
-import { PostModel } from "../models/postSchema.js"
+import { CommentModel } from "../models/commentSchema"
+import { PostModel } from "../models/postSchema"
 
-import { getIdFromParams } from './posts.js'
+import { getIdFromParams } from './posts'
 
 
 //#region _____________API Handlers__________________________

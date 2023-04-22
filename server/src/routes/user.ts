@@ -1,6 +1,6 @@
 import express from "express";
-import { onSignUp, onSignIn, onSignOut } from "../controllers/user.js"
-import auth from '../middleware/auth.js';
+import { onSignUp, onSignIn, onSignOut } from "../controllers/user"
+import auth from '../middleware/auth';
 
 const router = express.Router()
 

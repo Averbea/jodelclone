@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import UserModel from '../models/userSchema.js';
+import UserModel from '../models/userSchema';
 
 export const onSignOut = async (req, res) => {
     //TODO make logged out users unable to login with the old token 
