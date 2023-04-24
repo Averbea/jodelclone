@@ -14,17 +14,17 @@ import CreateComment from './components/CreateComment/CreateComment';
 function App() {
 
   return (
-    <div className='App'> 
+    <div className='App'>
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<><Outlet /><Footer/></>}> 
-              <Route element={<PrivateRoutes/>}>
+            <Route element={<><Outlet /><Footer /></>}>
+              <Route element={<PrivateRoutes />}>
                 <Route path="/" element={<Feed />} />
                 <Route path="/posts/:id" element={<PostDetails />} />
                 <Route path="/posts/:id/comment" element={<CreateComment />} />
-                <Route path="/createPost" element={<CreatePost/>}/>
-                <Route path="/Me" element={<Me/>}/>
+                <Route path="/createPost" element={<CreatePost />} />
+                <Route path="/Me" element={<Me />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Route>
@@ -32,7 +32,7 @@ function App() {
           </Routes>
 
         </BrowserRouter>
-      </AuthProvider>     
+      </AuthProvider>
     </div>
   );
 }
@@ -45,9 +45,9 @@ const LoginWrapper = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isLoggedIn()) {}
-      navigate("/")
-    }, [isLoggedIn, navigate])
+    if (isLoggedIn()) { }
+    navigate("/")
+  }, [isLoggedIn, navigate])
 
   return <Login />
 }
@@ -57,7 +57,7 @@ const PrivateRoutes = () => {
   const { isLoggedIn } = useAuth();
   const location = useLocation();
 
-    return (
-      isLoggedIn() ? <Outlet/> : <Navigate to="/login" state={{from: location}} replace />
-    ) 
+  return (
+    isLoggedIn() ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
+  )
 }

@@ -49,7 +49,7 @@ export const onGetCommentsForPost = async (req: CustomRequest, res: Response) =>
         const postId = getIdFromParams(req)
         if (!postId) return res.sendStatus(400)
         //TODO: add pagination
-        const commentsFromDb: Omit<Post, "comments"> & {comments: Comment[]} | null = await PostModel.findById(
+        const commentsFromDb: Omit<Post, "comments"> & { comments: Comment[] } | null = await PostModel.findById(
             postId,
             "comments", {
             populate: "comments"
@@ -158,7 +158,7 @@ export const onDeleteComment = async (req: CustomRequest, res: Response) => {
 //#region _____________Helper Functions______________________
 
 function reduceCommentToNecessaryData(comment: Comment, userId: string) {
-    
+
     const isUsersPost = comment.author === userId ? true : false;
     let userVote = "none"
     if (comment.upvotes.includes(userId)) {

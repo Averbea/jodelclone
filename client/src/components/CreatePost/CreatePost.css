@@ -1,4 +1,4 @@
-.createForm{
+.createForm {
     background-color: rgb(65, 158, 65);
     padding: 1rem;
     border-radius: .3rem;
@@ -9,26 +9,28 @@
 
 .createForm button {
     align-self: end;
-    font-size:.75rem;
+    font-size: .75rem;
     font-weight: 500;
-	padding: 5px .75rem;
+    padding: 5px .75rem;
     margin-top: 1rem;
     margin-right: 1rem;
-	border: 1px solid rgba(0, 0, 0, .2);
-    
+    border: 1px solid rgba(0, 0, 0, .2);
+
     border-radius: .75rem;
-	cursor:pointer;
+    cursor: pointer;
 
     text-decoration: none;
 }
 
 
-textarea::placeholder{
+textarea::placeholder {
     color: lightgrey;
 }
-textarea:focus-visible{
+
+textarea:focus-visible {
     outline: none;
 }
+
 textarea {
     /* width: 100%; */
     background-color: transparent;

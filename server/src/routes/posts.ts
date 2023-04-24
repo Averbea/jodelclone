@@ -1,5 +1,5 @@
 import express from "express";
-import {  onCreatePost, onDeletePost, onGetPost, onGetPosts, onVotePosts, } from "../controllers/posts"
+import { onCreatePost, onDeletePost, onGetPost, onGetPosts, onVotePosts, } from "../controllers/posts"
 import { onCommentPost, onDeleteComment, onGetCommentsForPost, onVoteComment } from "../controllers/comments";
 
 import auth from '../middleware/auth';

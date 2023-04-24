@@ -1,7 +1,7 @@
-.footer{
+.footer {
     position: sticky;
     margin-top: auto;
-    bottom: 0;  
+    bottom: 0;
     width: 100%;
 
     background-color: white;
@@ -9,28 +9,28 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, .2);
 
     text-align: center;
-    
+
 }
 
 /* for now this is the same as in Navbar component */
 .footerMenuItem {
-	font-size:.75rem;
+    font-size: .75rem;
     font-weight: 500;
-	padding: 5px .75rem;
-	margin-top: .75rem;
+    padding: 5px .75rem;
+    margin-top: .75rem;
     margin-inline: .5rem;
 
-	border: 1px solid rgba(0, 0, 0, .2);
+    border: 1px solid rgba(0, 0, 0, .2);
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, .2);
     border-radius: .75rem;
-	cursor:pointer;
+    cursor: pointer;
 
-	display: inline-block;
+    display: inline-block;
 
     text-decoration: none;
 }
 
-.footerMenuItem:visited{
+.footerMenuItem:visited {
     color: inherit;
 }
 

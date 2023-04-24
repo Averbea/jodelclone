@@ -12,7 +12,7 @@ export default function BackHeader() {
     return (
         <div className='backHeader'>
             <button onClick={() => navigate(-1)}>
-                <FontAwesomeIcon icon={faChevronLeft}/>
+                <FontAwesomeIcon icon={faChevronLeft} />
             </button>
         </div>
     )

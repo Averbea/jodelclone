@@ -5,7 +5,7 @@ import Container from '../Container/Container';
 import "./Me.css"
 
 export default function Me() {
-  const {username, onLogout} = useAuth();
+  const { username, onLogout } = useAuth();
   return (
     <Container>
       <h1>Me</h1>

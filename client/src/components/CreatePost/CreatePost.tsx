@@ -8,21 +8,21 @@ import './CreatePost.css'
 
 export default function CreatePost() {
   const navigate = useNavigate()
-  
+
   const [text, setText] = useState("");
 
 
   //TODO should the input be synced to a state or is this the better way?
   const create = async (e: FormEvent) => {
     e.preventDefault()
-    
+
     try {
       const response = await Api.createPost(text)
       const postId = response.data
-      navigate(`/posts/${postId}`, {replace:true})
+      navigate(`/posts/${postId}`, { replace: true })
     } catch (error) {
-             
-    }    
+
+    }
   }
 
   return (

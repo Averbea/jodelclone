@@ -1,7 +1,7 @@
 import mongoose, { AggregateOptions } from "mongoose"
 import { Post, PostModel } from "../models/postSchema"
 import { CommentModel } from "../models/commentSchema"
-import {  CustomRequest } from "../RequestType"
+import { CustomRequest } from "../RequestType"
 import { Request, Response } from "express"
 
 

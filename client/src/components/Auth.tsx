@@ -48,15 +48,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // TODO: sync with localStorage correctly
   const [user, setUser] = useState<User | null>(() => {
     let storageUser = localStorage.getItem('User')
-    if(!storageUser) return null
-    try{
+    if (!storageUser) return null
+    try {
       return JSON.parse(storageUser)
-    }catch (error: any){
+    } catch (error: any) {
       return null
     }
   });
 
- 
+
 
   async function handleLogin(username: string, password: string) {
     const temp = await api.signIn(username, password);
@@ -92,9 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   function isLoggedIn() {
     // this checks if the user is expired on every usage of the token and syncs to localstorage
     if (!user) return false
-    console.log(user)
     if (user?.token && isExpired(user.token)) {
-      console.log("NOOO")
       handleLogout()
       return false
     }

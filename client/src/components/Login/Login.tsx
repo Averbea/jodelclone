@@ -1,7 +1,7 @@
 import React, { FormEventHandler } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useAuth} from '../Auth';
+import { useAuth } from '../Auth';
 import Container from '../Container/Container';
 
 import './Login.css'
@@ -28,11 +28,11 @@ export default function Login() {
 
   }
   async function signUpPressed() {
-    if(username === "" || password === ""){
+    if (username === "" || password === "") {
       setErrorText("No Username or Password given")
       return
     }
-    if(password !== repeatPassword){
+    if (password !== repeatPassword) {
       setErrorText("Passwords don't match")
       return
     }
@@ -56,7 +56,7 @@ export default function Login() {
 
   }
 
-  function switchMode(){
+  function switchMode() {
     setIsSignUp(prev => !prev)
     setErrorText("")
     setUsername("")

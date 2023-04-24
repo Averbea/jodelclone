@@ -5,7 +5,7 @@ import './Footer.css'
 
 
 
-export default function Footer( ) {
+export default function Footer() {
   return (
     <div className='footer'>
       <NavLink className="footerMenuItem" to="/">
