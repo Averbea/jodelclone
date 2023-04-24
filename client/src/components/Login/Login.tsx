@@ -1,5 +1,5 @@
-import React from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React, { FormEventHandler } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth} from '../Auth';
 import Container from '../Container/Container';
@@ -16,11 +16,11 @@ export default function Login() {
 
   const [errorText, setErrorText] = React.useState("")
 
-  const { onLogin, onSignUp, isLoggedIn } = useAuth()
+  const { onLogin, onSignUp } = useAuth()
   const navigate = useNavigate()
-  const location = useLocation() as any
+  const location = useLocation()
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     //this maybe should be located somewhere else
@@ -64,7 +64,6 @@ export default function Login() {
     setRepeatPassword("")
   }
 
-  if (!isLoggedIn()) return <Navigate to="/" />
 
   const titleText = isSignUp ? "Sign up for Jodelclone" : "Welcome to Jodelclone"
   const submitText = isSignUp ? "Sign Up" : "Log In"

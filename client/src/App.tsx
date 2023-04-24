@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed/Feed';
 import Footer from './components/Footer/Footer';
@@ -28,7 +28,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Route>
-            <Route path="login" element={<Login />}/>        
+            <Route path="login" element={<LoginWrapper />} />
           </Routes>
 
         </BrowserRouter>
@@ -38,6 +38,19 @@ function App() {
 }
 
 export default App;
+
+const LoginWrapper = () => {
+  const { isLoggedIn } = useAuth()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isLoggedIn()) {}
+      navigate("/")
+    }, [isLoggedIn, navigate])
+
+  return <Login />
+}
 
 
 const PrivateRoutes = () => {
