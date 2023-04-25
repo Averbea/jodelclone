@@ -12,8 +12,7 @@ interface User {
 
 interface AuthContextType {
   isLoggedIn: () => boolean,
-  token: string,
-  username: string,
+  user: User | null 
   onLogin: (username: string, password: string) => Promise<void>,
   onLogout: () => Promise<void>,
   onSignUp: (username: string, password: string, repeatPassword: string) => Promise<void>
@@ -101,8 +100,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const value = {
     isLoggedIn: isLoggedIn,
-    token: user?.token || "",
-    username: user?.username || "",
+    user: user,
     onLogin: handleLogin,
     onLogout: handleLogout,
     onSignUp: handleSignUp

@@ -5,11 +5,11 @@ import Container from '../Container/Container';
 import "./Me.css"
 
 export default function Me() {
-  const { username, onLogout } = useAuth();
+  const { user, onLogout } = useAuth();
   return (
     <Container>
       <h1>Me</h1>
-      <div>{username}</div>
+      <div>{user?.username}</div>
       <button id="logout-button" onClick={() => onLogout()}>Logout</button>
     </Container>
   )

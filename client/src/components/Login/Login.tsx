@@ -1,5 +1,5 @@
 import React, { FormEventHandler } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../Auth';
 import Container from '../Container/Container';
@@ -16,9 +16,13 @@ export default function Login() {
 
   const [errorText, setErrorText] = React.useState("")
 
-  const { onLogin, onSignUp } = useAuth()
+  const { onLogin, onSignUp , user, isLoggedIn} = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+
+  if((user && isLoggedIn())){
+    return <Navigate to="/" />
+  }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -27,6 +31,7 @@ export default function Login() {
     isSignUp ? signUpPressed() : signInPressed()
 
   }
+
   async function signUpPressed() {
     if (username === "" || password === "") {
       setErrorText("No Username or Password given")
@@ -44,7 +49,6 @@ export default function Login() {
       setErrorText(error.message)
     }
   }
-
 
   async function signInPressed() {
     try {
