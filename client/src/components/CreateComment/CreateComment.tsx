@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Api from '../../api'
-import BackHeader from '../BackHeader/BackHeader';
+import BackHeader from '../Header/BackHeader/BackHeader';
 import Container from '../Container/Container';
 
 import './CreateComment.css'
@@ -33,7 +33,7 @@ export default function CreateComment() {
       <BackHeader />
       <Container>
         <form className='createForm' onSubmit={create}>
-          <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder='Gib deinen Jodel ein....' />
+          <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder='Kommentieren...' />
           <button type="submit" >Send</button>
         </form>
       </Container>

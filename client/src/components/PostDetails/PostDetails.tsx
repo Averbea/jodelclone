@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BackHeader from '../BackHeader/BackHeader'
+import BackHeader from '../Header/BackHeader/BackHeader'
 import Container from '../Container/Container'
 
 import { apiDeleteComment, apiVoteComment, deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } from '../../api'

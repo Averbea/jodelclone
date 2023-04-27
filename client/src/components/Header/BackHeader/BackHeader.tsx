@@ -4,16 +4,17 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 import "./BackHeader.css"
 import { useNavigate } from 'react-router-dom'
+import Header from '../Header'
 
 export default function BackHeader() {
 
     const navigate = useNavigate();
 
     return (
-        <div className='backHeader'>
-            <button onClick={() => navigate(-1)}>
+        <Header>
+            <button className="backheader-btn" onClick={() => navigate(-1)}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-        </div>
+        </Header>
     )
 }

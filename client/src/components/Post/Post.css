@@ -7,17 +7,17 @@
     color: white;
 }
 
-.header {
+.postheader {
     display: flex;
     font-size: .8rem;
 }
 
-.header * {
+.postheader * {
     padding: .2rem .2rem;
     margin-bottom: .5rem
 }
 
-.header .delete {
+.postheader .delete {
     position: relative;
     margin-left: auto;
     margin-right: .75rem;
@@ -27,7 +27,7 @@
 
 }
 
-.header .delete:hover {
+.postheader .delete:hover {
     transform: scale(1.3);
 
 }

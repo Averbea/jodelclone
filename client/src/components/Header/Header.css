@@ -1,0 +1,10 @@
+.header {
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    /* text-align: center; */
+    padding: .5rem;
+    height: 4rem;
+    position: sticky;
+    top: 0;
+
+}

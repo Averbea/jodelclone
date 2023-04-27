@@ -81,7 +81,7 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
     let backgroundColor = usedAsComment ? "grey" : getColor(data.createdAt)
     return (
         <div className='post' style={{ backgroundColor: backgroundColor }} onClick={() => onClick()}>
-            <div className='header'>
+            <div className='postheader'>
                 {!usedAsComment && "channel" in data && <p className='channel'>@{data.channel}</p>}
                 <p>nah</p>
                 <p>•</p>
