@@ -6,10 +6,10 @@ import Footer from './components/Footer/Footer';
 import NotFound from './components/NotFound/NotFound';
 import Login from './components/Login/Login';
 import { AuthProvider, useAuth } from './components/Auth';
-import CreatePost from './components/CreatePost/CreatePost';
+import CreatePost from './components/Create/CreatePost';
 import PostDetails from './components/PostDetails/PostDetails';
 import Me from './components/Me/Me';
-import CreateComment from './components/CreateComment/CreateComment';
+import CreateComment from './components/Create/CreateComment';
 
 function App() {
 
