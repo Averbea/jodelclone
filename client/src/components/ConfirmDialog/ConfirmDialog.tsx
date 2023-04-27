@@ -1,5 +1,6 @@
 import React from 'react'
 import './ConfirmDialog.css'
+import CustomButton from '../Button/CustomButton';
 
 interface Props {
     onConfirm: Function,
@@ -16,8 +17,8 @@ export default function ConfirmDialog({ onConfirm, onCancel, children }: Props) 
                 <h1>Confirm</h1>
                 <div className='confirm-dialog-content'>{children}</div>
                 <footer>
-                    <button onClick={() => onConfirm()}>Ok</button>
-                    <button onClick={() => onCancel()}>Cancel</button>
+                    <CustomButton text="Ok" variant="primary" onClick={() => onConfirm()} />
+                    <CustomButton text="Cancel" variant='secondary' onClick={() => onCancel()} />
                 </footer>
             </div>
         </div>

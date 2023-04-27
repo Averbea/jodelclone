@@ -1,0 +1,16 @@
+.custom-button {
+    cursor: pointer;
+    width: fit-content;
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.primary{
+    background: var(--primary);
+}
+
+.secondary{
+    background: transparent;
+}

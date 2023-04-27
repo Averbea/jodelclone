@@ -30,18 +30,3 @@
     justify-content: flex-end;
     gap: .5rem;
 }
-
-.confirm-dialog-box footer button {
-
-    cursor: pointer;
-
-
-    border: 1px solid var(--primary);
-    background: transparent;
-    border-radius: 20px;
-
-    font-weight: bold;
-    padding: 10px 20px;
-
-
-}
