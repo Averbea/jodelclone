@@ -131,8 +131,8 @@ export const onVotePosts = async (req: CustomRequest, res: Response) => {
         )
 
         if (newData) {
-            // const newPost = reducePostToNecessaryData(newData, req.userId!)
-            // res.status(200).json(newPost)
+            const newPost = reducePostToNecessaryData(newData, req.userId!)
+            res.status(200).json(newPost)
         } else {
             console.log(newData)
             res.sendStatus(400)
@@ -155,7 +155,7 @@ export function getIdFromParams(req: CustomRequest) {
     }
 }
 
-function reducePostToNecessaryData(post: Post & { voteAmount: number }, userId: string) {
+function reducePostToNecessaryData(post: Post, userId: string) {
     const isUsersPost = post.author === userId ? true : false;
     let userVote = "none"
     if (post.upvotes.includes(userId)) {
@@ -169,7 +169,6 @@ function reducePostToNecessaryData(post: Post & { voteAmount: number }, userId: 
         _id: post._id,
         isUsersPost,
         message: post.message,
-        voteAmount: post.voteAmount,
         votes: post.upvotes.length - post.downvotes.length,
         userVote: userVote,
         commentAmount: post.comments.length,
