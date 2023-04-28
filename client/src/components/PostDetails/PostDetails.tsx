@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import BackHeader from '../Header/BackHeader/BackHeader'
 import Container from '../Container/Container'
 
@@ -11,6 +11,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
 import './PostDetails.css'
+import useIsInViewport from '../../useIsInViewport'
 
 export default function PostDetails() {
   const [post, setPost] = useState<IPost | null>(null)
@@ -20,21 +21,27 @@ export default function PostDetails() {
 
   let navigate = useNavigate()
 
-  useEffect(() => {
-    if (!id) return
-    fetchPost(id).then(
-      (response) => {
-        if (response.data) {
-          setPost(response.data)
-          getCommentsForPost(id!).then(
-            (res) => setComments(res.data.comments)
-          )
-        } else {
-          navigate("/notfound", { replace: true })
-        }
+  useEffect(() =>{
+    if(!id) return
+    fetchPost(id)
+    .then((response) => {
+      if (response.data) {
+        setPost(response.data)
+      } else {
+        navigate("/notfound", { replace: true })
       }
-    )
-  }, [id, navigate])
+    })
+  },[id, navigate])
+
+  useEffect(() => {
+    if(!id) return
+      getCommentsForPost(id!)
+      .then(
+        (res) => setComments(res.data.comments)
+      )
+  }, [id])
+
+
 
   async function voteComment(commentId: string, vote: "up" | "down") {
     if (!post) return
@@ -78,6 +85,7 @@ export default function PostDetails() {
         <button className="createCommentButton" onClick={() => navigate("./comment")}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
+        
       </Container>
     </>
   )
