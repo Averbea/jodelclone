@@ -21,6 +21,9 @@ export default function PostDetails() {
 
   let navigate = useNavigate()
 
+  const lastRef = useRef<HTMLDivElement>(null)
+  const endInViewport = useIsInViewport(lastRef);
+
   useEffect(() =>{
     if(!id) return
     fetchPost(id)
@@ -34,12 +37,12 @@ export default function PostDetails() {
   },[id, navigate])
 
   useEffect(() => {
-    if(!id) return
-      getCommentsForPost(id!)
+    if(!id || !endInViewport) return
+      getCommentsForPost(id!, comments.length, 1)
       .then(
-        (res) => setComments(res.data.comments)
+        (res) => setComments(prev => prev.concat(res.data.comments))
       )
-  }, [id])
+  }, [comments.length, endInViewport, id])
 
 
 
@@ -85,7 +88,7 @@ export default function PostDetails() {
         <button className="createCommentButton" onClick={() => navigate("./comment")}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        
+        <div ref={lastRef}/>
       </Container>
     </>
   )

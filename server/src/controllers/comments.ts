@@ -48,14 +48,19 @@ export const onGetCommentsForPost = async (req: CustomRequest, res: Response) =>
     try {
         const postId = getIdFromParams(req)
         if (!postId) return res.sendStatus(400)
-        //TODO: add pagination
+
+        let limit = Number(req.query.limit) || 10
+        let skip = Number(req.query.skip) || 0
+
         const commentsFromDb: Omit<Post, "comments"> & { comments: Comment[] } | null = await PostModel.findById(
             postId,
-            "comments", {
-            populate: "comments"
-        }
+            { "comments": { $slice: [skip, limit] } },
+            {
+                populate: "comments"
+            }
         )
 
+        console.log(commentsFromDb)
 
 
         if (!commentsFromDb) return res.sendStatus(400) // post does not exist

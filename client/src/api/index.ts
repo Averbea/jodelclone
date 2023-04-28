@@ -71,7 +71,7 @@ export interface ICommentAPIResponse {
   comments: [IComment]
 }
 
-export const getCommentsForPost = (postId: string) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments`)
+export const getCommentsForPost = (postId: string, skip?: number, limit?: number) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments?skip=${skip ? skip : 0}&limit=${limit ? limit : 10}`)
 export const commentPost = (postId: string, message: string) => API.post(`/posts/${postId}/comment`, { message })
 
 export const apiVoteComment = (postId: string, commentId: string, vote: "up" | "down") => API.post<IComment>(`/posts/${postId}/${commentId}/vote`, { vote })
