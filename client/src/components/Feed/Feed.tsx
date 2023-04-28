@@ -27,7 +27,7 @@ export default function Feed() {
   useEffect(() => {
     if(!endInViewport) return
     
-    fetchPosts(sortBy, posts.length, LIMIT)
+    fetchPosts(sortBy, posts.length)
     .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)

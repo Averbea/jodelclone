@@ -1,4 +1,5 @@
 import axios, { Axios } from 'axios';
+import configData from "../config.json";
 
 const API: Axios = axios.create({ baseURL: 'http://localhost:5000' });
 //TODO maybe this should get the token from AuthenticationContext instead of localStorage
@@ -47,7 +48,7 @@ export interface IPost {
   channel: string,
   createdAt: string
 }
-export const fetchPosts = (sortBy: "date" | "votes" | "comments" = "date", skip?: number, limit?: number) => API.get<IPost[]>(`/posts?sort=${sortBy ? sortBy : "date"}&skip=${skip ? skip : 0}&limit=${limit ? limit : 10}`);
+export const fetchPosts = (sortBy: "date" | "votes" | "comments" = "date", skip?: number, limit = configData.FETCH_LIMIT_POSTS) => API.get<IPost[]>(`/posts?sort=${sortBy ? sortBy : "date"}&skip=${skip ? skip : 0}&limit=${limit}`);
 export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
 
 export const createPost = (message: string) => API.post<string>('/posts/create', { message })
@@ -71,7 +72,7 @@ export interface ICommentAPIResponse {
   comments: [IComment]
 }
 
-export const getCommentsForPost = (postId: string, skip?: number, limit?: number) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments?skip=${skip ? skip : 0}&limit=${limit ? limit : 10}`)
+export const getCommentsForPost = (postId: string, skip?: number, limit = configData.FETCH_LIMIT_COMMENTS) => API.get<ICommentAPIResponse>(`/posts/${postId}/comments?skip=${skip ? skip : 0}&limit=${limit}`)
 export const commentPost = (postId: string, message: string) => API.post(`/posts/${postId}/comment`, { message })
 
 export const apiVoteComment = (postId: string, commentId: string, vote: "up" | "down") => API.post<IComment>(`/posts/${postId}/${commentId}/vote`, { vote })
