@@ -45,19 +45,18 @@ export const onDeletePost = async (req: CustomRequest, res: Response) => {
 
 export const onGetPosts = async (req: CustomRequest, res: Response) => {
 
-    let limit = Number(req.query.limit) | 10
-    let skip = Number(req.query.skip) | 0
+    let limit = Number(req.query.limit) || 10
+    let skip = Number(req.query.skip) || 0
 
     let sortBy: AggregateOptions
 
     if (req.query.sort == "comments") {
-        sortBy = { commentAmount: -1 };
+        sortBy = { commentAmount: -1, createdAt: -1 };
     } else if (req.query.sort == "votes") {
-        sortBy = { voteAmount: -1 };
+        sortBy = { voteAmount: -1, createdAt: -1 };
     } else {
         sortBy = { createdAt: -1 }
     }
-
     try {
         const postsFromDb = await PostModel.aggregate([{
             "$addFields": {
@@ -132,8 +131,8 @@ export const onVotePosts = async (req: CustomRequest, res: Response) => {
         )
 
         if (newData) {
-            const newPost = reducePostToNecessaryData(newData, req.userId!)
-            res.status(200).json(newPost)
+            // const newPost = reducePostToNecessaryData(newData, req.userId!)
+            // res.status(200).json(newPost)
         } else {
             console.log(newData)
             res.sendStatus(400)
@@ -156,7 +155,7 @@ export function getIdFromParams(req: CustomRequest) {
     }
 }
 
-function reducePostToNecessaryData(post: Post, userId: string) {
+function reducePostToNecessaryData(post: Post & { voteAmount: number }, userId: string) {
     const isUsersPost = post.author === userId ? true : false;
     let userVote = "none"
     if (post.upvotes.includes(userId)) {
@@ -170,6 +169,7 @@ function reducePostToNecessaryData(post: Post, userId: string) {
         _id: post._id,
         isUsersPost,
         message: post.message,
+        voteAmount: post.voteAmount,
         votes: post.upvotes.length - post.downvotes.length,
         userVote: userVote,
         commentAmount: post.comments.length,
