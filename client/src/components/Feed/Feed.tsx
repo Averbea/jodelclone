@@ -22,18 +22,18 @@ export default function Feed() {
 
   const lastRef = useRef<HTMLDivElement>(null)
   const endInViewport = useIsInViewport(lastRef);
-  const limitToFetch = useDebounce(posts.length)
+  const skipForFetch = useDebounce(posts.length)
 
   useEffect(() => {
-    if(!endInViewport) return
-    
-    fetchPosts(sortBy, limitToFetch)
+    if(!endInViewport || posts.length !== skipForFetch) return
+
+    fetchPosts(sortBy, skipForFetch)
     .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)
     })
     .catch((error) => console.log(error))
-  }, [endInViewport, limitToFetch, sortBy])
+  }, [endInViewport, skipForFetch, posts.length, sortBy])
 
 
   const vote = async (postId: string, v: "up" | "down") => {

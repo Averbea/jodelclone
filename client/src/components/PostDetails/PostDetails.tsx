@@ -14,6 +14,8 @@ import './PostDetails.css'
 import useIsInViewport from '../../useIsInViewport'
 import useDebounce from '../../useDebounce'
 
+
+
 export default function PostDetails() {
   const [post, setPost] = useState<IPost | null>(null)
   const [comments, setComments] = useState<IComment[]>([])
@@ -24,7 +26,7 @@ export default function PostDetails() {
 
   const lastRef = useRef<HTMLDivElement>(null)
   const endInViewport = useIsInViewport(lastRef)
-  const limitToFetch = useDebounce(comments.length)
+  const skipForFetch = useDebounce(comments.length)
 
   useEffect(() =>{
     if(!id) return
@@ -40,11 +42,12 @@ export default function PostDetails() {
 
   useEffect(() => {
     if(!id || !endInViewport) return
-      getCommentsForPost(id!, limitToFetch)
+    if(comments.length !== skipForFetch)
+      getCommentsForPost(id!, skipForFetch)
       .then(
         (res) => setComments(prev => prev.concat(res.data.comments))
       )
-  }, [limitToFetch, endInViewport, id])
+  }, [skipForFetch, endInViewport, id, comments.length])
 
 
 
