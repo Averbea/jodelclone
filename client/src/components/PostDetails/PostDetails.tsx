@@ -12,6 +12,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import './PostDetails.css'
 import useIsInViewport from '../../useIsInViewport'
+import useDebounce from '../../useDebounce'
 
 export default function PostDetails() {
   const [post, setPost] = useState<IPost | null>(null)
@@ -22,7 +23,8 @@ export default function PostDetails() {
   let navigate = useNavigate()
 
   const lastRef = useRef<HTMLDivElement>(null)
-  const endInViewport = useIsInViewport(lastRef);
+  const endInViewport = useIsInViewport(lastRef)
+  const limitToFetch = useDebounce(comments.length)
 
   useEffect(() =>{
     if(!id) return
@@ -38,11 +40,11 @@ export default function PostDetails() {
 
   useEffect(() => {
     if(!id || !endInViewport) return
-      getCommentsForPost(id!, comments.length)
+      getCommentsForPost(id!, limitToFetch)
       .then(
         (res) => setComments(prev => prev.concat(res.data.comments))
       )
-  }, [comments.length, endInViewport, id])
+  }, [limitToFetch, endInViewport, id])
 
 
 

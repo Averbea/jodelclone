@@ -12,8 +12,7 @@ import './Feed.css'
 import Container from '../Container/Container'
 import { IPost } from '../../api'
 import useIsInViewport from '../../useIsInViewport'
-
-const LIMIT = 1
+import useDebounce from '../../useDebounce'
 
 export default function Feed() {
   const [sortBy, setSortBy] = useState<SortType>("date")
@@ -23,17 +22,18 @@ export default function Feed() {
 
   const lastRef = useRef<HTMLDivElement>(null)
   const endInViewport = useIsInViewport(lastRef);
+  const limitToFetch = useDebounce(posts.length)
 
   useEffect(() => {
     if(!endInViewport) return
     
-    fetchPosts(sortBy, posts.length)
+    fetchPosts(sortBy, limitToFetch)
     .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)
     })
     .catch((error) => console.log(error))
-  }, [endInViewport, posts.length, sortBy])
+  }, [endInViewport, limitToFetch, sortBy])
 
 
   const vote = async (postId: string, v: "up" | "down") => {
