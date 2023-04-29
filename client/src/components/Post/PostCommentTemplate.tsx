@@ -43,7 +43,7 @@ function getColor(createdAt: string) {
     return colors[hashVal % colors.length]
 }
 
-export default function PostCommentTemplate({ data, type, onClick = () => { }, onVotePost, onDeletePost }: {
+export default function PostCommentTemplate({ data, type, onClick, onVotePost, onDeletePost }: {
     data: IPost | IComment,
     type: "post" | "comment",
     onClick?: Function,
@@ -78,9 +78,17 @@ export default function PostCommentTemplate({ data, type, onClick = () => { }, o
         classesUp += " not-voted"
     }
 
-    let backgroundColor = usedAsComment ? "grey" : getColor(data.createdAt)
+
+    let style: React.CSSProperties = {
+        backgroundColor: usedAsComment ? "grey" : getColor(data.createdAt)
+    }
+
+    if(onClick){
+        style.cursor = "pointer"
+    }
+
     return (
-        <div className='post' style={{ backgroundColor: backgroundColor }} onClick={() => onClick()}>
+        <div className='post' style={style} onClick={() => onClick ? onClick() : {}}>
             <div className='postheader'>
                 {!usedAsComment && "channel" in data && <p className='channel'>@{data.channel}</p>}
                 <p>nah</p>
