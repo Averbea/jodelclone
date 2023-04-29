@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BackHeader from '../Header/BackHeader/BackHeader'
 import Container from '../Container/Container'
 
@@ -10,10 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
+import { useFetchAndUpdateArrOnScroll } from '../../hooks/useFetchAndUpdateArrOnScroll'
 import './PostDetails.css'
-import useIsInViewport from '../../useIsInViewport'
-import useDebounce from '../../useDebounce'
-
 
 
 export default function PostDetails() {
@@ -24,10 +22,14 @@ export default function PostDetails() {
 
   let navigate = useNavigate()
 
-  const lastRef = useRef<HTMLDivElement>(null)
-  const endInViewport = useIsInViewport(lastRef)
-  const skipForFetch = useDebounce(comments.length)
+  function updateComments(){
+    if(!id) return
+    getCommentsForPost(id, comments.length)
+    .then((res) => setComments(prev => prev.concat(res.data.comments)))
+  }
 
+  const {lastRef} = useFetchAndUpdateArrOnScroll(comments, updateComments)
+  
   useEffect(() =>{
     if(!id) return
     fetchPost(id)
@@ -39,16 +41,6 @@ export default function PostDetails() {
       }
     })
   },[id, navigate])
-
-  useEffect(() => {
-    if(!id || !endInViewport) return
-    if(comments.length !== skipForFetch) return
-      getCommentsForPost(id!, skipForFetch)
-      .then(
-        (res) => setComments(prev => prev.concat(res.data.comments))
-      )
-  }, [skipForFetch, endInViewport, id, comments.length])
-
 
 
   async function voteComment(commentId: string, vote: "up" | "down") {

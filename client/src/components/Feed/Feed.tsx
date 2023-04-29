@@ -1,18 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { fetchPosts, votePost, deletePost } from '../../api'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
-import Post from '../Post/Post'
-import SortingHeader, { SortType } from '../Header/SortingHeader/SortingHeader'
-
-import './Feed.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { IPost, deletePost, fetchPosts, votePost } from '../../api'
+import { useFetchAndUpdateArrOnScroll } from '../../hooks/useFetchAndUpdateArrOnScroll'
 import Container from '../Container/Container'
-import { IPost } from '../../api'
-import useIsInViewport from '../../useIsInViewport'
-import useDebounce from '../../useDebounce'
+import SortingHeader, { SortType } from '../Header/SortingHeader/SortingHeader'
+import Post from '../Post/Post'
+import './Feed.css'
 
 export default function Feed() {
   const [sortBy, setSortBy] = useState<SortType>("date")
@@ -20,20 +15,16 @@ export default function Feed() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  const lastRef = useRef<HTMLDivElement>(null)
-  const endInViewport = useIsInViewport(lastRef);
-  const skipForFetch = useDebounce(posts.length)
 
-  useEffect(() => {
-    if(!endInViewport || posts.length !== skipForFetch) return
-
-    fetchPosts(sortBy, skipForFetch)
+  function updatePosts(){
+    fetchPosts(sortBy, posts.length)
     .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)
     })
-    .catch((error) => console.log(error))
-  }, [endInViewport, skipForFetch, posts.length, sortBy])
+  }
+
+  const {lastRef} = useFetchAndUpdateArrOnScroll(posts, updatePosts)
 
 
   const vote = async (postId: string, v: "up" | "down") => {
