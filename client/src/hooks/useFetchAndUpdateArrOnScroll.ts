@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
-import useIsInViewport from "../useIsInViewport"
-import useDebounce from "../useDebounce"
+import useIsInViewport from "./useIsInViewport"
+import useDebounce from "./useDebounce"
 
 export function useFetchAndUpdateArrOnScroll<T>( arr: T[], toCall: Function){
     const lastRef = useRef<HTMLDivElement>(null)
