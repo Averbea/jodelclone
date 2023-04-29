@@ -42,7 +42,7 @@ export default function PostDetails() {
 
   useEffect(() => {
     if(!id || !endInViewport) return
-    if(comments.length !== skipForFetch)
+    if(comments.length !== skipForFetch) return
       getCommentsForPost(id!, skipForFetch)
       .then(
         (res) => setComments(prev => prev.concat(res.data.comments))
