@@ -49,6 +49,7 @@
     border: none;
     color: white;
     transition: .2s;
+    cursor: pointer;
 }
 
 .vote-button:not([disabled]):hover {
