@@ -13,21 +13,23 @@
 }
 
 
-textarea::placeholder {
+.createForm :is(input, textarea)::placeholder {
     color: lightgrey;
 }
 
-textarea:focus-visible {
+.createForm :is(input, textarea):focus-visible {
     outline: none;
 }
 
-textarea {
-    /* width: 100%; */
+.createForm :is(textarea, input) {
     background-color: transparent;
     color: white;
     resize: none;
     border: none;
     padding: 1rem;
 
-    height: 5rem
+}
+
+.createForm textarea{
+    min-height: 5rem
 }

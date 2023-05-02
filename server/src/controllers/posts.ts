@@ -80,14 +80,18 @@ export const onGetPosts = async (req: CustomRequest, res: Response) => {
         res.status(404).json({ message: error.message })
     }
 }
-
+interface OnCreatePostBody {
+    message: string,
+    channel: string
+}
 export const onCreatePost = async (req: CustomRequest, res: Response) => {
-    const post = req.body;
-    const { message } = post
+    const post: OnCreatePostBody = req.body;
+    const { message, channel } = post
+
 
     if (!message) return res.sendStatus(400)
 
-    const newPost = new PostModel({ message: message, channel: "main", author: req.userId, createdAt: new Date().toISOString() });
+    const newPost = new PostModel({ message: message, channel: channel || "main", author: req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save()
         res.status(201).json(newPost._id)
