@@ -6,12 +6,9 @@ import { apiDeleteComment, apiVoteComment, deletePost, fetchPost, getCommentsFor
 import { useNavigate, useParams } from 'react-router-dom'
 import Post from '../Post/Post'
 import Comment from '../Post/Comment'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
+import CreateButton from '../CreateButton/CreateButton'
 
 import { useFetchAndUpdateArrOnScroll } from '../../hooks/useFetchAndUpdateArrOnScroll'
-import './PostDetails.css'
 
 
 export default function PostDetails() {
@@ -82,9 +79,7 @@ export default function PostDetails() {
           {commentComponents}
         </>
 
-        <button className="createCommentButton" onClick={() => navigate("./comment")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
+        <CreateButton onClick={() => navigate("./comment")} />
         <div ref={lastRef}/>
       </Container>
     </>

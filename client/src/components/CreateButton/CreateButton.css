@@ -1,4 +1,4 @@
-.createCommentButton {
+.createButton {
     background-color: #4848481b;
     color: white;
 
@@ -14,5 +14,18 @@
 
     border: 2px solid #ffffffa2;
     border-radius: 50% 50%;
+    transition: all .2s ;
 
+}
+
+@keyframes hvr-pop {
+    50% {
+      transform: translate(-1.5rem, 0) scale(1.3);
+    }
+
+  }
+
+.createButton:hover{
+    animation: hvr-pop .3s;
+    transform: translate(-1.5rem, 0) scale(1.15);
 }

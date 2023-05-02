@@ -22,3 +22,7 @@ code {
 :root {
   --primary: #ffaa0d
 }
+
+html {
+  overflow-y: scroll;
+}

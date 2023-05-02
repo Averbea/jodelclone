@@ -1,5 +1,3 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IPost, deletePost, fetchPosts, votePost } from '../../api'
@@ -7,7 +5,7 @@ import { useFetchAndUpdateArrOnScroll } from '../../hooks/useFetchAndUpdateArrOn
 import Container from '../Container/Container'
 import SortingHeader, { SortType } from '../Header/SortingHeader/SortingHeader'
 import Post from '../Post/Post'
-import './Feed.css'
+import CreateButton from '../CreateButton/CreateButton'
 
 export default function Feed() {
   const [sortBy, setSortBy] = useState<SortType>("date")
@@ -63,9 +61,7 @@ export default function Feed() {
       <Container>
         {postContent}
         {loading && "loading"}
-        <button className="createButton" onClick={() => navigate("/createPost")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
+        <CreateButton  onClick={() => navigate("/createPost")}/>
         <div ref={lastRef} />
       </Container>
     </>
