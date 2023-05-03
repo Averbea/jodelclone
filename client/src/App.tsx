@@ -10,6 +10,7 @@ import CreatePost from './components/Create/CreatePost';
 import PostDetails from './components/PostDetails/PostDetails';
 import Me from './components/Me/Me';
 import CreateComment from './components/Create/CreateComment';
+import Channels from './components/Channels/Channels';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/posts/:id" element={<PostDetails />} />
                 <Route path="/posts/:id/comment" element={<CreateComment />} />
                 <Route path="/createPost" element={<CreatePost />} />
+                <Route path="/channels" element={<Channels />} />
                 <Route path="/Me" element={<Me />} />
                 <Route path="*" element={<NotFound />} />
               </Route>

@@ -28,8 +28,10 @@ export const onGetTopChannels = async (req: CustomRequest, res: Response) => {
 
 export const onSearchChannel = async (req: CustomRequest, res: Response) => {
     try {
-        const { searchTerm } = req.body
+        const searchTerm = req.query.searchTerm?.toString().trim()
         const amount = Number(req.query.amount) || 10
+
+        if (!searchTerm) return res.sendStatus(400)
 
         let response = await PostModel.aggregate([
             {

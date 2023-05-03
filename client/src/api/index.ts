@@ -77,3 +77,10 @@ export const commentPost = (postId: string, message: string) => API.post(`/posts
 
 export const apiVoteComment = (postId: string, commentId: string, vote: "up" | "down") => API.post<IComment>(`/posts/${postId}/${commentId}/vote`, { vote })
 export const apiDeleteComment = (postId: string, commentId: string) => API.delete(`/posts/${postId}/${commentId}`)
+
+export interface ChannelAPIResponse {
+  _id: string,
+  count: number
+}
+export const apiFetchTopChannels = (amount: number) => API.get<ChannelAPIResponse[]>(`/channels/topChannels`, { params: { amount } })
+export const apiSearchChannels = (amount: number, searchTerm: string) => API.get<ChannelAPIResponse[]>(`/channels/search`, { params: { amount, searchTerm } })
