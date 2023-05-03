@@ -48,7 +48,7 @@ export interface IPost {
   channel: string,
   createdAt: string
 }
-export const fetchPosts = (sortBy: "date" | "votes" | "comments" = "date", skip?: number, limit = configData.FETCH_LIMIT_POSTS) => API.get<IPost[]>(`/posts?sort=${sortBy ? sortBy : "date"}&skip=${skip ? skip : 0}&limit=${limit}`);
+export const fetchPosts = (sortBy: "date" | "votes" | "comments" = "date", skip = 0, limit = configData.FETCH_LIMIT_POSTS, channel?: string) => API.get<IPost[]>(`/posts`, { params: { sort: sortBy, skip, limit, channel } });
 export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
 
 export const createPost = (message: string, channel: string) => API.post<string>('/posts/create', { message, channel })

@@ -1,4 +1,4 @@
-import mongoose, { AggregateOptions } from "mongoose"
+import mongoose, { AggregateOptions, PipelineStage } from "mongoose"
 import { Post, PostModel } from "../models/postSchema"
 import { CommentModel } from "../models/commentSchema"
 import { CustomRequest } from "../RequestType"
@@ -47,6 +47,8 @@ export const onGetPosts = async (req: CustomRequest, res: Response) => {
 
     let limit = Number(req.query.limit) || 10
     let skip = Number(req.query.skip) || 0
+    const channel = req.query.channel?.toString()
+
 
     let sortBy: AggregateOptions
 
@@ -58,20 +60,25 @@ export const onGetPosts = async (req: CustomRequest, res: Response) => {
         sortBy = { createdAt: -1 }
     }
     try {
-        const postsFromDb = await PostModel.aggregate([{
-            "$addFields": {
-                "voteAmount": {
-                    $subtract: [{ $size: "$upvotes" }, { $size: "$downvotes" }]
-                },
-                "commentAmount": {
-                    $size: "$comments"
+
+        let aggreagePipeline: PipelineStage[] = []
+        if (channel) aggreagePipeline.push({ $match: { channel: channel } })
+        aggreagePipeline.push(
+            {
+                "$addFields": {
+                    "voteAmount": {
+                        $subtract: [{ $size: "$upvotes" }, { $size: "$downvotes" }]
+                    },
+                    "commentAmount": {
+                        $size: "$comments"
+                    }
                 }
+            },
+            {
+                $sort: sortBy
             }
-        },
-        {
-            $sort: sortBy
-        }
-        ]).skip(skip).limit(limit)
+        )
+        const postsFromDb = await PostModel.aggregate(aggreagePipeline).skip(skip).limit(limit)
 
         const posts = postsFromDb.map((post) => reducePostToNecessaryData(post, req.userId!))
         res.status(200).json(posts);

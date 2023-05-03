@@ -26,7 +26,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/posts?sort=comments&skip=1&limit=1",
+							"raw": "{{server}}/posts?sort=comments&skip=0&limit=10&channel=sommer",
 							"host": [
 								"{{server}}"
 							],
@@ -40,11 +40,15 @@
 								},
 								{
 									"key": "skip",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "10"
+								},
+								{
+									"key": "channel",
+									"value": "sommer"
 								}
 							]
 						}
@@ -411,7 +415,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"searchTerm\": \"m\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -419,13 +423,24 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}/channels/search",
+							"raw": "{{server}}/channels/search?amount=10&searchTerm=tes",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"channels",
 								"search"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "10",
+									"description": "amount to fetch"
+								},
+								{
+									"key": "searchTerm",
+									"value": "tes"
+								}
 							]
 						}
 					},
