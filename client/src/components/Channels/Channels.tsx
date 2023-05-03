@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Container from "../Container/Container"
-import { ChannelAPIResponse, apiFetchTopChannels, apiSearchChannels } from "../../api"
+import { ChannelAPIResponse, apiFetchChannels } from "../../api"
 import useDebounce from "../../hooks/useDebounce"
 
 export default function Channels() {
@@ -11,7 +11,7 @@ export default function Channels() {
   const debouncedSearchTerm = useDebounce(searchTerm)
 
   useEffect(() => {
-    apiFetchTopChannels(10).then((response) =>
+    apiFetchChannels(10).then((response) =>
       setTopChannels(response.data)
     )
   }, [])
@@ -21,7 +21,7 @@ export default function Channels() {
       setSearchResults([])
       return
     }
-    apiSearchChannels(10, debouncedSearchTerm).then(response => setSearchResults(response.data))
+    apiFetchChannels(10, debouncedSearchTerm).then(response => setSearchResults(response.data))
   }, [debouncedSearchTerm])
 
   const searchComponents = searchResults.map((el) => (

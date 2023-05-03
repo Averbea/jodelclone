@@ -82,5 +82,5 @@ export interface ChannelAPIResponse {
   _id: string,
   count: number
 }
-export const apiFetchTopChannels = (amount: number) => API.get<ChannelAPIResponse[]>(`/channels/topChannels`, { params: { amount } })
-export const apiSearchChannels = (amount: number, searchTerm: string) => API.get<ChannelAPIResponse[]>(`/channels/search`, { params: { amount, searchTerm } })
+
+export const apiFetchChannels = (amount: number, searchTerm?: string) => API.get<ChannelAPIResponse[]>(`/channels`, { params: { amount, searchTerm } })
