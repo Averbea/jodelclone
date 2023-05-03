@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3e7f4bdd-0918-4e46-8cb4-15b94657cb87",
+		"_postman_id": "4beafe95-a03f-46b0-9bcb-f4ae2e74cea3",
 		"name": "Jodelclone",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25385951"
@@ -11,16 +11,41 @@
 			"item": [
 				{
 					"name": "Get Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/posts",
+							"raw": "{{server}}/posts?sort=comments&skip=1&limit=1",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"posts"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "comments"
+								},
+								{
+									"key": "skip",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -70,7 +95,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": null
+									"value": "643ef8409f913ec49d1f40de"
 								}
 							]
 						}
@@ -94,7 +119,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "643c17d3efd9bf74cd91cc18"
+									"value": "643ef007fbf2c131a428c18a"
 								}
 							]
 						}
@@ -128,66 +153,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "643c0d746ef7d9d76dcd2405"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Comment Post",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"message\": \"1wer234mei ein Test Kommentar\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/posts/:id/comment",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"posts",
-								":id",
-								"comment"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "643c55a6196acf5b7518de55"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get comments for post",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/posts/:id/comments",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"posts",
-								":id",
-								"comments"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "643c0d746ef7d9d76dcd2405"
+									"value": "643ef8409f913ec49d1f40de"
 								}
 							]
 						}
@@ -233,7 +199,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Alexave\",\r\n    \"password\": \"password\"\r\n}",
+							"raw": "{\r\n    \"username\": \"a\",\r\n    \"password\": \"b\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -257,7 +223,211 @@
 					"name": "Sign Out",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Comment Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"1wer234mei ein Test Kommentar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/posts/:id/comment",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"posts",
+								":id",
+								"comment"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "643c55a6196acf5b7518de55"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comments for post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/posts/:id/comments?skip=1&limit=1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"posts",
+								":id",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vote Comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vote\":\"up\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/posts/:id/:commentId/vote",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"posts",
+								":id",
+								":commentId",
+								"vote"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "643c0d746ef7d9d76dcd2405"
+								},
+								{
+									"key": "commentId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/posts/:id/:commentId",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"posts",
+								":id",
+								":commentId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123124"
+								},
+								{
+									"key": "commentId",
+									"value": "124124"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channels",
+			"item": [
+				{
+					"name": "Get Top Channels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/channels/topChannels?amount=jhgl",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"channels",
+								"topChannels"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "jhgl"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Channel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"searchTerm\": \"m\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/channels/search",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"channels",
+								"search"
+							]
+						}
 					},
 					"response": []
 				}
