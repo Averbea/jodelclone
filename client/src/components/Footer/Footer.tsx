@@ -30,7 +30,7 @@ export default function Footer() {
       </Badge>
       <Badge
         active={path === "/Me"}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/Me")}
       >
         Me
       </Badge>
