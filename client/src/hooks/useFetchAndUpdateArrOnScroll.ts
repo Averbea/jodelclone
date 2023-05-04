@@ -10,7 +10,6 @@ export function useFetchAndUpdateArrOnScroll<T>( arr: T[], toCall: Function){
   
     useEffect(() => {
       if(!endInViewport || alreadyCalled) return
-      if(arr.length !== skipForFetch) return
       setAlreadyCalled(true)
        toCall()
     }, [skipForFetch, endInViewport, arr.length, toCall, alreadyCalled])
