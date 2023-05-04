@@ -26,3 +26,39 @@ code {
 html {
   overflow-y: scroll;
 }
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+  padding: .3rem;
+}
+
+input[type="submit"],
+input[type="button"] {
+  margin-top: 10px;
+  cursor: pointer;
+
+
+  border: 1px solid var(--primary);
+  background: transparent;
+  border-radius: 20px;
+
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: var(--primary);
+  color: white
+}
+
+input[type="submit"] {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+input[type="button"] {
+  font-size: .75rem;
+  padding: 5px 10px;
+}

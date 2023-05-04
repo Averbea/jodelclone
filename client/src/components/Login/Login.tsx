@@ -80,7 +80,8 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-container">
             <label htmlFor="username">Username:</label>
-            <input id="username" type="text" autoComplete='username' value={username} onChange={(event) => setUsername(event.target.value)} />
+            <input id="usern
+            ame" type="text" autoComplete='username' value={username} onChange={(event) => setUsername(event.target.value)} />
           </div>
           <div className="input-container">
             <label htmlFor="password">Password:</label>

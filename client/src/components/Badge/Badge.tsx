@@ -5,7 +5,7 @@ import './Badge.css'
 
 
 interface Props {
-  active: boolean,
+  active?: boolean,
   children?: ReactNode,
   onClick?: MouseEventHandler<HTMLButtonElement>
 }

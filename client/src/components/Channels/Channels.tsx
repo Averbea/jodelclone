@@ -1,7 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React, { CSSProperties, useEffect, useState } from "react"
 import Container from "../Container/Container"
 import { ChannelAPIResponse, apiFetchChannels } from "../../api"
 import useDebounce from "../../hooks/useDebounce"
+import Badge from "../Badge/Badge"
+
+
+
+const badgeNumberStyle: CSSProperties = {
+  position: "absolute",
+  minWidth: "20px",
+  padding: "5px",
+  borderRadius: "50%",
+  top: "-7px",
+  right: "-7px",
+  backgroundColor: "var(--primary)",
+  fontSize: "8px",
+}
+
 
 export default function Channels() {
   let [topChannels, setTopChannels] = useState<ChannelAPIResponse[]>([])
@@ -25,24 +40,20 @@ export default function Channels() {
   }, [debouncedSearchTerm])
 
   const searchComponents = searchResults.map((el) => (
-    <li key={"search" + el._id}>
-      {el._id} : {el.count}
-    </li>
+    <Badge active key={"search" + el._id}><p>{el._id}</p> <div style={badgeNumberStyle}>{el.count}</div></Badge>
   ))
 
   const channelComponents = topChannels.map((el) => (
-    <li key={"top" + el._id}>
-      {el._id} : {el.count}
-    </li>
+    <Badge active key={"channel" + el._id}><p>{el._id}</p> <div style={badgeNumberStyle}>{el.count}</div></Badge>
   ))
   return (
     <Container>
       <h1>Channels</h1>
       Suche einen Channel:
-      <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} />
+      <input type="text" onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} />
       <ul>{searchComponents}</ul>
       <h2>Top Channels</h2>
-      <ul>{channelComponents}</ul>
+      <div style={{ display: "flex", flexDirection: "column" }}>{channelComponents}</div>
     </Container>
   )
 }

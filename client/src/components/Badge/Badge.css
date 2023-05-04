@@ -1,4 +1,5 @@
 .badge {
+    position: relative;
     width: fit-content;
     font-size: .75rem;
     font-weight: 500;
