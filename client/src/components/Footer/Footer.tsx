@@ -1,25 +1,39 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react"
+import { NavLink, useLocation, useNavigate } from "react-router-dom"
 
-import './Footer.css'
-
-
+import "./Footer.css"
+import Badge from "../Badge/Badge"
 
 export default function Footer() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const path = location.pathname
   return (
-    <div className='footer'>
-      <NavLink className="footerMenuItem" to="/">
+    <div className="footer">
+      <Badge
+        active={path === "/"}
+        onClick={() => navigate("/")}
+      >
         Home
-      </NavLink>
-      <NavLink className="footerMenuItem" to="Channels">
+      </Badge>
+      <Badge
+        active={path === "/Channels"}
+        onClick={() => navigate("/Channels")}
+      >
         Channels
-      </NavLink>
-      <NavLink className="footerMenuItem" to="Inbox">
+      </Badge>
+      <Badge
+        active={path === "/Inbox"}
+        onClick={() => navigate("/Inbox")}
+      >
         Inbox
-      </NavLink>
-      <NavLink className="footerMenuItem" to="Me">
+      </Badge>
+      <Badge
+        active={path === "/Me"}
+        onClick={() => navigate("/")}
+      >
         Me
-      </NavLink>
+      </Badge>
     </div>
   )
 }

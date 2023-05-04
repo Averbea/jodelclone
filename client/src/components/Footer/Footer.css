@@ -33,7 +33,7 @@
     color: inherit;
 }
 
-.active {
+/* .active {
     border-color: var(--primary);
     box-shadow: 0 0 3px 0 var(--primary);
-}
+} */

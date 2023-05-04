@@ -1,8 +1,5 @@
-.header-btn-group{
-    text-align: center;
-}
-
-.headerMenuItem {
+.badge {
+    width: fit-content;
     font-size: .75rem;
     font-weight: 500;
     padding: 5px .75rem;
@@ -13,13 +10,13 @@
     border: 1px solid rgba(0, 0, 0, .2);
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, .2);
     border-radius: .75rem;
-    /* font-weight:bold; */
-    cursor: pointer;
-
-    /* display: inline-block; */
 }
 
-.activeSortingItem {
+.badge-active {
     border-color: var(--primary);
     box-shadow: 0 0 3px 0 var(--primary);
+}
+
+.badge-clickable{
+    cursor: pointer;
 }

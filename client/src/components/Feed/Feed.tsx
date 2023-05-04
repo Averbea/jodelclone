@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IPost, deletePost, fetchPosts, votePost } from '../../api'
 import { useFetchAndUpdateArrOnScroll } from '../../hooks/useFetchAndUpdateArrOnScroll'
 import Container from '../Container/Container'
-import SortingHeader, { SortType } from '../Header/SortingHeader/SortingHeader'
+import SortingHeader, { SortType } from '../Header/SortingHeader'
 import Post from '../Post/Post'
 import CreateButton from '../CreateButton/CreateButton'
 
@@ -14,15 +14,15 @@ export default function Feed() {
   const navigate = useNavigate()
 
 
-  function updatePosts(){
+  function updatePosts() {
     fetchPosts(sortBy, posts.length)
-    .then((response) => {
+      .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)
-    })
+      })
   }
 
-  const {lastRef} = useFetchAndUpdateArrOnScroll(posts, updatePosts)
+  const { lastRef } = useFetchAndUpdateArrOnScroll(posts, updatePosts)
 
 
   const vote = async (postId: string, v: "up" | "down") => {
@@ -54,14 +54,14 @@ export default function Feed() {
     setPosts([])
     setSortBy(sort)
   }
-  
+
   return (
     <>
       <SortingHeader active={sortBy} setActive={changeSortBy} />
       <Container>
         {postContent}
         {loading && "loading"}
-        <CreateButton  onClick={() => navigate("/createPost")}/>
+        <CreateButton onClick={() => navigate("/createPost")} />
         <div ref={lastRef} />
       </Container>
     </>
