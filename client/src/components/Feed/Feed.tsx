@@ -7,11 +7,11 @@ import SortingHeader, { SortType } from '../Header/SortingHeader'
 import Post from '../Post/Post'
 import CreateButton from '../CreateButton/CreateButton'
 
-interface Props{
+interface Props {
   channel?: string
 }
 
-export default function Feed({channel} : Props) {
+export default function Feed({ channel }: Props) {
   const [sortBy, setSortBy] = useState<SortType>("date")
   const [posts, setPosts] = useState<IPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -61,7 +61,7 @@ export default function Feed({channel} : Props) {
 
   return (
     <>
-      <SortingHeader active={sortBy} setActive={changeSortBy} />
+      <SortingHeader active={sortBy} setActive={changeSortBy} displayBackButton={channel != null} />
       <Container>
         {postContent}
         {loading && "loading"}

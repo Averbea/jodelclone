@@ -1,25 +1,24 @@
-import Badge from '../Badge/Badge'
+import BackButton from './BackButton'
 import HeaderTemplate from './HeaderTemplate'
+import SortingComponent from './SortingComponent'
 
 interface Props {
   setActive: (sort: SortType) => void,
-  active: SortType
+  active: SortType,
+  displayBackButton?: boolean
 }
 
 export type SortType = "date" | "votes" | "comments"
 
-export default function SortingHeader({ setActive, active }: Props) {
+export default function SortingHeader({ setActive, active, displayBackButton }: Props) {
   return (
-    <HeaderTemplate center={
-      <div style={{
-        justifySelf: "flex-start", width: "fit-content"
-      }}>
-        < Badge active={active === "date"
-        } onClick={() => setActive("date")}>Neueste</Badge>
-        <Badge active={active === "comments"} onClick={() => setActive("comments")}> Meist kommentierte</Badge>
-        <Badge active={active === "votes"} onClick={() => setActive("votes")}> Lauteste</Badge>
-      </div>
-    }
+    <HeaderTemplate
+      left={
+        displayBackButton ? <BackButton /> : null
+      }
+      center={
+        <SortingComponent active={active} setActive={setActive} />
+      }
     />
   )
 }

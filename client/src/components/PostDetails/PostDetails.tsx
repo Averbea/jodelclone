@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BackHeader from '../Header/BackHeader/BackHeader'
+import BackHeader from '../Header/BackHeader'
 import Container from '../Container/Container'
 
 import { apiDeleteComment, apiVoteComment, deletePost, fetchPost, getCommentsForPost, IComment, IPost, votePost } from '../../api'
@@ -19,25 +19,25 @@ export default function PostDetails() {
 
   let navigate = useNavigate()
 
-  function updateComments(){
-    if(!id) return
+  function updateComments() {
+    if (!id) return
     getCommentsForPost(id, comments.length)
-    .then((res) => setComments(prev => prev.concat(res.data.comments)))
+      .then((res) => setComments(prev => prev.concat(res.data.comments)))
   }
 
-  const {lastRef} = useFetchAndUpdateArrOnScroll(comments, updateComments)
-  
-  useEffect(() =>{
-    if(!id) return
+  const { lastRef } = useFetchAndUpdateArrOnScroll(comments, updateComments)
+
+  useEffect(() => {
+    if (!id) return
     fetchPost(id)
-    .then((response) => {
-      if (response.data) {
-        setPost(response.data)
-      } else {
-        navigate("/notfound", { replace: true })
-      }
-    })
-  },[id, navigate])
+      .then((response) => {
+        if (response.data) {
+          setPost(response.data)
+        } else {
+          navigate("/notfound", { replace: true })
+        }
+      })
+  }, [id, navigate])
 
 
   async function voteComment(commentId: string, vote: "up" | "down") {
@@ -80,7 +80,7 @@ export default function PostDetails() {
         </>
 
         <CreateButton onClick={() => navigate("./comment")} />
-        <div ref={lastRef}/>
+        <div ref={lastRef} />
       </Container>
     </>
   )
