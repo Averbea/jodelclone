@@ -1,5 +1,5 @@
 .createButton {
-    background-color: #4848481b;
+    background-color: #48484838;
     color: white;
 
     text-align: center;
@@ -12,10 +12,11 @@
     height: 3rem;
     transform: translate(-1.5rem, 0);
 
-    border: 2px solid #ffffffa2;
+    border: 2px solid white;
     border-radius: 50% 50%;
     transition: all .2s ;
 
+    cursor: pointer;
 }
 
 @keyframes hvr-pop {
