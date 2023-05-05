@@ -11,6 +11,7 @@ import PostDetails from './components/PostDetails/PostDetails';
 import Me from './components/Me/Me';
 import CreateComment from './components/Create/CreateComment';
 import Channels from './components/Channels/Channels';
+import { useEffect } from 'react';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <div className='App'>
       <AuthProvider>
         <BrowserRouter>
+          <TitleChanger />
           <Routes>
             <Route element={<><Outlet /><Footer /></>}>
               <Route element={<PrivateRoutes />}>
@@ -33,7 +35,6 @@ function App() {
             </Route>
             <Route path="login" element={<Login />} />
           </Routes>
-
         </BrowserRouter>
       </AuthProvider>
     </div>
@@ -55,4 +56,22 @@ const PrivateRoutes = () => {
 const ChannelFeed = () => {
   const { channel } = useParams()
   return <Feed channel={channel} />
+}
+
+const TitleChanger = () => {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    let title = "Jodelclone"
+    if (pathname === "/") title = "Jodelclone - Home"
+    if (pathname.includes("Channels")) title = "Jodelclone - Channels"
+    if (pathname.includes("Inbox")) title = "Jodelclone - Inbox"
+    if (pathname.includes("Me")) title = "Jodelclone - Me"
+
+    if (pathname.includes("createPost")) title = "Jodelclone - Create a post"
+    if (pathname.includes("/posts/")) title = "Jodelclone - Post Details"
+    document.title = title
+  }, [pathname])
+
+  return <></>
 }
