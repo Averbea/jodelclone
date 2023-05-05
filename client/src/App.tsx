@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import './App.css';
 import Feed from './components/Feed/Feed';
 import Footer from './components/Footer/Footer';
@@ -26,6 +26,7 @@ function App() {
                 <Route path="/posts/:id/comment" element={<CreateComment />} />
                 <Route path="/createPost" element={<CreatePost />} />
                 <Route path="/channels" element={<Channels />} />
+                <Route path="/channels/:channel" element={<ChannelFeed />} />
                 <Route path="/Me" element={<Me />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
@@ -43,12 +44,15 @@ export default App;
 
 
 
-
 const PrivateRoutes = () => {
   const { user, isLoggedIn } = useAuth();
   const location = useLocation();
-
   return (
     user && isLoggedIn() ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
   )
+}
+
+const ChannelFeed = () => {
+  const { channel } = useParams()
+  return <Feed channel={channel} />
 }

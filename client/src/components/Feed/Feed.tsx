@@ -7,7 +7,11 @@ import SortingHeader, { SortType } from '../Header/SortingHeader'
 import Post from '../Post/Post'
 import CreateButton from '../CreateButton/CreateButton'
 
-export default function Feed() {
+interface Props{
+  channel?: string
+}
+
+export default function Feed({channel} : Props) {
   const [sortBy, setSortBy] = useState<SortType>("date")
   const [posts, setPosts] = useState<IPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -15,7 +19,7 @@ export default function Feed() {
 
 
   function updatePosts() {
-    fetchPosts(sortBy, posts.length)
+    fetchPosts(sortBy, posts.length, undefined, channel)
       .then((response) => {
         setPosts(prev => prev.concat(response.data))
         setLoading(false)

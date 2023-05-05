@@ -3,6 +3,7 @@ import Container from "../Container/Container"
 import { ChannelAPIResponse, apiFetchChannels } from "../../api"
 import useDebounce from "../../hooks/useDebounce"
 import Badge from "../Badge/Badge"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -25,6 +26,8 @@ export default function Channels() {
 
   const debouncedSearchTerm = useDebounce(searchTerm)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     apiFetchChannels(10).then((response) =>
       setTopChannels(response.data)
@@ -40,11 +43,17 @@ export default function Channels() {
   }, [debouncedSearchTerm])
 
   const searchComponents = searchResults.map((el) => (
-    <Badge active key={"search" + el._id}><p>{el._id}</p> <div style={badgeNumberStyle}>{el.count}</div></Badge>
+    <Badge active key={"search" + el._id} onClick={() => navigate(`/Channels/${el._id}`)}>
+      <p>{el._id}</p>
+      <div style={badgeNumberStyle}>{el.count}</div>
+    </Badge>
   ))
 
   const channelComponents = topChannels.map((el) => (
-    <Badge active key={"channel" + el._id}><p>{el._id}</p> <div style={badgeNumberStyle}>{el.count}</div></Badge>
+    <Badge active key={"channel" + el._id} onClick={() => navigate(`/Channels/${el._id}`)}>
+      <p>{el._id}</p>
+      <div style={badgeNumberStyle}>{el.count}</div>
+    </Badge>
   ))
   return (
     <Container>
