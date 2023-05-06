@@ -1,9 +1,9 @@
-import React, { FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import BackHeader from '../Header/BackHeader'
 import Container from '../Container/Container'
-
 import './CreateTemplate.css'
 import CustomButton from '../Button/CustomButton'
+import { getRandomInt } from '../../Utils'
 
 interface CommonProps {
   placeholder: string
@@ -18,9 +18,13 @@ type ConditionalProps = {
 }
 
 
+const COLORS = ["#9D79BC", "#FF751F", "#52A362", "#2095AC", "#D03E2E"]
+
 export default function CreateTemplate({ onSubmit, placeholder, variant }: CommonProps & ConditionalProps) {
   const [text, setText] = useState("");
   const [channel, setChannel] = useState("main")
+
+  const [color, setColor] = useState(COLORS[getRandomInt(0, COLORS.length - 1)])
 
   function submitForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -31,18 +35,35 @@ export default function CreateTemplate({ onSubmit, placeholder, variant }: Commo
     }
   }
 
+
+
   return (
     <>
       <BackHeader />
       <Container>
-        <form className='createForm' onSubmit={(e) => submitForm(e)}>
+        <form style={{ backgroundColor: color }} className='createForm' onSubmit={(e) => submitForm(e)}>
           {variant === "post" && <input required type='text' value={"@" + channel} onChange={(e) => setChannel(e.target.value.slice(1))} />}
           <textarea required value={text} onChange={(e) => setText(e.target.value)} placeholder={placeholder} />
           <footer className='createForm-footer'>
+            <div className="createForm-colorSelector">
+              {COLORS.map((col) => <ColorButton color={col} setColor={setColor} />)}
+            </div>
             <CustomButton type='submit' text='Send' variant='primary' />
           </footer>
         </form>
       </Container>
     </>
+  )
+}
+
+
+
+interface ColorButtonProps {
+  color: string,
+  setColor: (color: string) => void
+}
+function ColorButton({ color, setColor }: ColorButtonProps) {
+  return (
+    <button type="button" style={{ backgroundColor: color }} className="createForm-colorButton" onClick={() => setColor(color)} />
   )
 }

@@ -10,6 +10,7 @@
 .createForm-footer{
     display: flex;
     justify-content: flex-end;
+    gap: 1rem
 }
 
 
@@ -32,4 +33,21 @@
 
 .createForm textarea{
     min-height: 5rem
+}
+
+.createForm-colorSelector{
+    display: flex;
+    gap: 10px;
+    right: 40px;
+    bottom: 80px;
+    align-items: center;
+}
+
+.createForm-colorButton{
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 25%;
+    border: 1px solid rgb(121, 121, 121);
+    cursor: pointer;
 }
