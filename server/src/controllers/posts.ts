@@ -97,9 +97,9 @@ export const onCreatePost = async (req: CustomRequest, res: Response) => {
     const { message, channel, color } = post
 
 
-    if (!message) return res.sendStatus(400)
+    if (!message || !color || !channel) return res.sendStatus(400)
 
-    const newPost = new PostModel({ message: message, channel: channel.toLowerCase() || "main", color: color, author: req.userId, createdAt: new Date().toISOString() });
+    const newPost = new PostModel({ message: message, channel: channel.toLowerCase(), color: color, author: req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save()
         res.status(201).json(newPost._id)

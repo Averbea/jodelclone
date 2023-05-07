@@ -29,20 +29,6 @@ function getTimeToDisplay(prevDate: string): string {
 }
 
 
-function getColor(createdAt: string) {
-    // TODO choose more fitting colors 
-    const colors = [
-        "#9D79BC",
-        "#FF751F",
-        "#52A362",
-        "#2095AC",
-        "#D03E2E"
-    ]
-    const hashVal = createdAt.split('').map(char => char.charCodeAt(0)).reduce((accumulator, value) => accumulator + value)
-
-    return colors[hashVal % colors.length]
-}
-
 export default function PostCommentTemplate({ data, type, onClick, onVotePost, onDeletePost }: {
     data: IPost | IComment,
     type: "post" | "comment",
@@ -80,10 +66,10 @@ export default function PostCommentTemplate({ data, type, onClick, onVotePost, o
 
 
     let style: React.CSSProperties = {
-        backgroundColor: usedAsComment ? "grey" : getColor(data.createdAt)
+        backgroundColor: "color" in data ? data.color : "grey"
     }
 
-    if(onClick){
+    if (onClick) {
         style.cursor = "pointer"
     }
 

@@ -4,7 +4,6 @@ import CreateTemplate from './CreateTemplate';
 
 export default function CreateComment() {
   const navigate = useNavigate()
-
   let { id } = useParams()
 
   let postId = id ? id : ""

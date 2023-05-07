@@ -46,12 +46,13 @@ export interface IPost {
   userVote: "none" | "up" | "down",
   commentAmount: number,
   channel: string,
+  color: string,
   createdAt: string
 }
 export const fetchPosts = (sortBy: "date" | "votes" | "comments" = "date", skip = 0, limit = configData.FETCH_LIMIT_POSTS, channel?: string) => API.get<IPost[]>(`/posts`, { params: { sort: sortBy, skip, limit, channel } });
 export const fetchPost = (postId: string) => API.get<IPost>(`/posts/${postId}`)
 
-export const createPost = (message: string, channel: string) => API.post<string>('/posts/create', { message, channel })
+export const createPost = (message: string, channel: string, color: string) => API.post<string>('/posts/create', { message, channel, color })
 
 
 export const votePost = (postId: string, vote: "up" | "down") => API.post<IPost>(`/posts/${postId}/vote`, { vote })

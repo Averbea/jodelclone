@@ -62,7 +62,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"message\": \"A random test post\"\r\n}",
+							"raw": "{\r\n    \"message\": \"test\",\r\n    \"channel\": \"main\",\r\n    \"color\" : \"red\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
