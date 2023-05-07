@@ -61,7 +61,7 @@ export default function Feed({ channel }: Props) {
 
   return (
     <>
-      <SortingHeader active={sortBy} setActive={changeSortBy} displayBackButton={channel != null} />
+      <SortingHeader active={sortBy} setActive={changeSortBy} displayBackButton={channel != null} channel={channel} />
       <Container>
         {postContent}
         {loading && "loading"}

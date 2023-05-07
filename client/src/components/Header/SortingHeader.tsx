@@ -5,12 +5,13 @@ import SortingComponent from './SortingComponent'
 interface Props {
   setActive: (sort: SortType) => void,
   active: SortType,
-  displayBackButton?: boolean
+  displayBackButton?: boolean,
+  channel?: string
 }
 
 export type SortType = "date" | "votes" | "comments"
 
-export default function SortingHeader({ setActive, active, displayBackButton }: Props) {
+export default function SortingHeader({ setActive, active, displayBackButton, channel }: Props) {
   return (
     <HeaderTemplate
       left={
@@ -18,6 +19,9 @@ export default function SortingHeader({ setActive, active, displayBackButton }: 
       }
       center={
         <SortingComponent active={active} setActive={setActive} />
+      }
+      right={
+        channel && <span style={{ color: '#403f3f' }} >@{channel}</span>
       }
     />
   )

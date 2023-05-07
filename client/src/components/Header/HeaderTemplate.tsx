@@ -26,9 +26,9 @@ export default function HeaderTemplate({ left, center, right }: Props) {
 
     return (
         <header style={headerStyle}>
-            <div style={{ justifySelf: "left" }}>{left}</div>
-            <div>{center}</div>
-            <div style={{ justifySelf: "right" }}>{right}</div>
+            <div style={{ justifySelf: "left", display: "flex", alignItems: "center" }}>{left}</div>
+            <div style={{ display: "flex", alignItems: "center" }}>{center}</div>
+            <div style={{ justifySelf: "right", display: "flex", alignItems: "center" }}>{right}</div>
         </header>
 
     )
