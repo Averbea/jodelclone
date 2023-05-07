@@ -89,16 +89,17 @@ export const onGetPosts = async (req: CustomRequest, res: Response) => {
 }
 interface OnCreatePostBody {
     message: string,
-    channel: string
+    channel: string,
+    color: string
 }
 export const onCreatePost = async (req: CustomRequest, res: Response) => {
     const post: OnCreatePostBody = req.body;
-    const { message, channel } = post
+    const { message, channel, color } = post
 
 
     if (!message) return res.sendStatus(400)
 
-    const newPost = new PostModel({ message: message, channel: channel.toLowerCase() || "main", author: req.userId, createdAt: new Date().toISOString() });
+    const newPost = new PostModel({ message: message, channel: channel.toLowerCase() || "main", color: color, author: req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save()
         res.status(201).json(newPost._id)
@@ -184,6 +185,7 @@ function reducePostToNecessaryData(post: Post, userId: string) {
         userVote: userVote,
         commentAmount: post.comments.length,
         channel: post.channel,
+        color: post.color,
         createdAt: post.createdAt
 
     }

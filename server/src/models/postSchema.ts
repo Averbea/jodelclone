@@ -6,6 +6,7 @@ export interface Post extends Required<{
     author: string,
     message: string,
     channel: string,
+    color: string,
     upvotes: string[],
     downvotes: string[],
     comments: mongoose.Schema.Types.ObjectId[],
@@ -17,6 +18,7 @@ export const postSchema = new mongoose.Schema<Post>({
     author: { type: String, required: true },
     message: { type: String, required: true },
     channel: { type: String, required: true },
+    color: { type: String, required: true},
     upvotes: {
         type: [String],
         default: []
