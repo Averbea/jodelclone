@@ -37,8 +37,9 @@ In `./server` run:
 
 ### Node Server
 
-in `./server` run:
+in `./server` copy `.env.dist` to `.env` and change the values to your needs.
 
+Then run:
 ```bash
     npm run dev
 ```
